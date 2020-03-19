@@ -1,0 +1,19 @@
+{
+  "name": "ECC Library",
+  "version": "1.0",
+  "description": "ECC Library self checkout, with Library World",
+  "content_scripts": [
+    {
+      "matches": [ "http://circ.libraryworld.com/selfservice.html" ],
+      "js": [ "content-login.js" ]
+    }
+  ],
+  "options_page": "options.html",
+  "chrome_url_overrides": {
+    "newtab": "blank.html"
+  },
+  "permissions": [
+    "storage"
+  ],
+  "manifest_version": 2
+}

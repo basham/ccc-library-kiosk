@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Options - ECC Library</title>
+    <link href="options.css" rel="stylesheet" type="text/css">
+  </head>
+  <body>
+    <h1>ECC Library</h1>
+    <h2>Library World login settings</h2>
+    <form id="login" autocomplete="off">
+      <div class="control">
+        <label for="username">Username</label>
+        <input id="username" type="text" />
+      </div>
+      <div class="control">
+        <label for="password">Password</label>
+        <input id="password" type="password" />
+      </div>
+      <div class="control">
+        <label for="libraryName">Library name</label>
+        <input id="libraryName" type="text" />
+      </div>
+      <div class="button-group">
+        <button type="submit">Save</button>
+        <span id="status" class="status" role="status"></span>
+      </div>
+    </form>
+    <script src="options.js" type="module"></script>
+  </body>
+</html>

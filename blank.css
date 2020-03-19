@@ -1,0 +1,15 @@
+* {
+  box-sizing: border-box;
+  line-height: 1;
+}
+
+body {
+  margin: 0;
+  padding: 2rem;
+}
+
+h1 {
+  font-size: 2rem;
+  line-height: calc(40rem/16);
+  margin: 0;
+}

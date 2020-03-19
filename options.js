@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-  chrome.storage.sync.get({
+  chrome.storage.local.get({
     username: '',
     password: '',
     libraryName: ''
@@ -17,7 +17,7 @@ document.getElementById('login').addEventListener('submit', (event) => {
   const password = document.getElementById('password').value
   const libraryName = document.getElementById('libraryName').value
 
-  chrome.storage.sync.set({
+  chrome.storage.local.set({
     username,
     password,
     libraryName

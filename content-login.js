@@ -1,4 +1,4 @@
-chrome.storage.sync.get({
+chrome.storage.local.get({
   username: '',
   password: '',
   libraryName: ''

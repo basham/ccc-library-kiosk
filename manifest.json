@@ -5,10 +5,18 @@
   "icons": {
     "128": "icon128.png"
   },
+  "background": {
+    "scripts": [ "background.js" ],
+    "persistent": false
+  },
   "content_scripts": [
     {
       "matches": [ "http://circ.libraryworld.com/selfservice.html" ],
       "js": [ "content-login.js" ]
+    },
+    {
+      "matches": [ "<all_urls>" ],
+      "js": [ "content-timeout.js" ]
     }
   ],
   "options_page": "options.html",
@@ -16,7 +24,8 @@
     "newtab": "blank.html"
   },
   "permissions": [
-    "storage"
+    "storage",
+    "tabs"
   ],
   "manifest_version": 2
 }

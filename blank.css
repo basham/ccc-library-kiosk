@@ -5,6 +5,7 @@
   --color-purple: #78496a;
   --color-green: #687819;
   --color-brown: #543019;
+  --color-white: #ffffff;
   --color-highlight: moccasin;
 }
 
@@ -31,18 +32,15 @@ body {
   color: var(--color-black);
   font-size: 100%;
   font-family: system-ui, sans-serif;
-  margin: 0 auto;
-  max-width: 45rem;
-  padding: 2rem 4rem;
+  padding: 0;
+  margin: 0;
 }
 
 h1 {
-  border-bottom: calc(3rem/16) solid var(--color-gray);
-  color: var(--color-brown);
+  color: var(--color-white);
   font-size: 3rem;
-  line-height: 4rem;
+  line-height: 1;
   margin: 1rem 0 0;
-  padding-bottom: 1rem;
 }
 
 h2 {
@@ -54,12 +52,6 @@ h2 {
 
 h2:target {
   animation: highlight 8s ease-out;
-}
-
-h2 .icon {
-  left: -2ch;
-  position: absolute;
-  top: 0.25rem;
 }
 
 ol,
@@ -79,4 +71,25 @@ p {
 
 a {
   color: var(--color-orange);
+}
+
+.header {
+  background-color: var(--color-purple);
+  border-bottom: calc(1rem/16) solid var(--color-black);
+}
+
+.content {
+  margin: 0 auto;
+  max-width: 45rem;
+  padding: 2rem 4rem;
+}
+
+.content :first-child {
+  margin-top: 0;
+}
+
+.icon {
+  left: -2ch;
+  position: absolute;
+  top: 0.25rem;
 }

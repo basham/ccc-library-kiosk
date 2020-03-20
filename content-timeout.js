@@ -8,12 +8,6 @@ let lastBodyOverflow = document.body.style.overflow
 renderTimoutNotice()
 markActivity()
 
-console.log('@@', chrome)
-
-chrome.tabs.getCurrent(({ id, windowId }) => {
-  console.log('##', id, windowId)
-})
-
 document.addEventListener('mousemove', () => {
   markActivity()
 })

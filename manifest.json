@@ -2,6 +2,9 @@
   "name": "ECC Library",
   "version": "1.0",
   "description": "ECC Library self checkout, with Library World",
+  "icons": {
+    "128": "icon128.png"
+  },
   "content_scripts": [
     {
       "matches": [ "http://circ.libraryworld.com/selfservice.html" ],

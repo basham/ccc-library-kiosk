@@ -11,20 +11,21 @@ const container = document.createElement('div')
 document.body.appendChild(container)
 
 container.innerHTML = `
-  <div class="header">
-    <div class="content">
+  <header>
+    <a href="#" class="logo">
       <img src="${chrome.runtime.getURL('ecc-logo-white.png')}" alt="Evangelical Community Church" />
-      <h1>Scan your library card</h1>
-    </div>
-  </div>
-  <div class="content">
+      <span>Library</span>
+    </a>
+  </header>
+  <main>
+    <h1>Scan your library card</h1>
     <form method="GET" action="/cgi-bin/selfservice.pl" autocomplete="off">
       <div class="control control--small">
-        <label for="patronNumber">
+        <label for="library-card-number">
           Library card number
-          <span class="hint">2000XXXX</span>
+          <small>2000XXXX</small>
         </label>
-        <input type="text" name="term" id="patronNumber" value="">
+        <input type="text" name="term" id="library-card-number" value="">
       </div>
       <div class="button-group">
         <button type="submit">Continue</button>
@@ -32,6 +33,7 @@ container.innerHTML = `
       <input type="hidden" name="goodpatron" value="">
       <input type="hidden" name="command" value="checkout">
     </form>
+    <hr />
     <h2>
       <span class="icon" aria-hidden="true">🗃</span>
       Find your card
@@ -46,7 +48,7 @@ container.innerHTML = `
       Scanner not working?
     </h2>
     <ol>
-      <li>Confirm the <a href="#patronNumber">library card number field</a> is in focus before scanning</li>
+      <li>Confirm the <a href="#library-card-number">library card number field</a> is in focus before scanning</li>
       <li>Position the scanner 6 to 12 inches away from the barcode</li>
       <li>The scanner will emit a green light when it detects a barcode</li>
     </ol>
@@ -57,7 +59,7 @@ container.innerHTML = `
     <ol>
       <li>Write down a note informing the librarian of the missing card</li>
       <li>Find your card number in the patron booklet</li>
-      <li>Enter the number in the <a href="#patronNumber">library card number field</a></li>
+      <li>Enter the number in the <a href="#library-card-number">library card number field</a></li>
     </ol>
     <h2>
       <span class="icon" aria-hidden="true">🖊️</span>
@@ -70,12 +72,12 @@ container.innerHTML = `
       <li>Current date</li>
       <li>Titles and barcode numbers (located in the upper left back corner, in the format of <b>3000XXXX</b>) of any books and materials you are borrowing</li>
     </ol>
-  </div>
+  </main>
 `
 
 focus()
 // document.addEventListener('keyup', focus)
 
 function focus () {
-  document.getElementById('patronNumber').focus()
+  document.getElementById('library-card-number').focus()
 }

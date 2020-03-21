@@ -1,5 +1,6 @@
 :root {
-  --color-gray: #cccccc;
+  --color-light-gray: #cccccc;
+  --color-dark-gray: #666666;
   --color-black: #333333;
   --color-orange: #b06110;
   --color-purple: #78496a;
@@ -11,12 +12,16 @@
 
 * {
   box-sizing: border-box;
-  line-height: 1;
+  font-size: inherit;
 }
 
-*:focus {
+:focus {
   outline: calc(3rem/16) solid var(--color-orange);
   outline-offset: calc(2rem/16);
+}
+
+:target {
+  animation: highlight 8s ease-out;
 }
 
 @keyframes highlight {
@@ -36,60 +41,113 @@ body {
   margin: 0;
 }
 
-h1 {
+header {
+  background-color: var(--color-purple);
+  border-bottom: calc(1rem/16) solid var(--color-black);
+  padding: 1rem;
+  text-align: center;
+}
+
+a.logo {
+  align-items: center;
+  display: inline-flex;
+  padding: 0.5rem;
+  text-decoration: none;
+}
+
+a.logo span {
   color: var(--color-white);
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-left: 2rem;
+}
+
+main {
+  font-size: calc(18rem/16);
+  line-height: calc(28rem/16);
+  margin: 0 auto;
+  max-width: 45rem;
+  padding: 4rem;
+}
+
+h1 {
   font-size: 3rem;
-  line-height: 1;
-  margin: 1rem 0 0;
+  line-height: 3.5rem;
+  margin: 0;
 }
 
 h2 {
   font-size: 2rem;
   line-height: 2.5rem;
-  margin: 2rem 0 0.5rem;
+  margin: 2rem 0 0;
   position: relative;
 }
 
-h2:target {
-  animation: highlight 8s ease-out;
+h2 > .icon {
+  left: -2ch;
+  position: absolute;
+  top: 0.25rem;
 }
 
-ol,
-ul {
-  padding: 0;
+hr {
+  border-color: var(--color-light-gray);
+  border-style: solid;
+  border-width: 0 0 calc(2rem/16);
+  margin: 4rem 0;
+}
+
+form {
+  margin: 2rem 0 0;
 }
 
 p,
-li {
-  font-size: calc(18rem/16);
-  line-height: calc(28rem/16);
-}
-
-p {
-  margin: 0 0 1rem;
+ol,
+ul {
+  margin: 1rem 0 0;
+  padding: 0;
 }
 
 a {
   color: var(--color-orange);
 }
 
-.header {
-  background-color: var(--color-purple);
-  border-bottom: calc(1rem/16) solid var(--color-black);
+label {
+  display: block;
+  font-weight: bold;
 }
 
-.content {
-  margin: 0 auto;
-  max-width: 45rem;
-  padding: 2rem 4rem;
+small {
+  color: var(--color-dark-gray);
+  display: block;
+  font-weight: normal;
 }
 
-.content :first-child {
-  margin-top: 0;
+input {
+  border: calc(1rem/16) solid var(--color-black);
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+  width: 100%;
 }
 
-.icon {
-  left: -2ch;
-  position: absolute;
-  top: 0.25rem;
+button {
+  background-color: var(--color-orange);
+  border: none;
+  border-radius: 0.25rem;
+  color: var(--color-white);
+  font-weight: bold;
+  padding: 0.75rem 1rem;
+}
+
+.control {
+  margin-top: 1rem;
+}
+
+.control--small {
+  max-width: 12rem;
+}
+
+.button-group {
+  align-items: center;
+  display: flex;
+  margin-top: 1rem;
 }

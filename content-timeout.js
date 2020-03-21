@@ -1,4 +1,4 @@
-const showTimeout = 1000 * 60 // 60 seconds
+const showTimeout = 1000 * 40 // 40 seconds
 const confirmTimeout = 1000 * 20 // 20 seconds
 let started = false
 let lastActivity = null

@@ -132,8 +132,9 @@ function renderPatron () {
   const checkouts = [ ...document.getElementById('checkout_table').querySelectorAll('tr') ]
     .filter((row, index) => index > 0)
     .map((row) => {
-      const [ status, barcode, title, callNumber, outDateRaw, dueDateRaw ] = [ ...row.childNodes ]
+      const [ status, barcode, titleRaw, callNumber, outDateRaw, dueDateRaw ] = [ ...row.childNodes ]
         .map((el) => el.textContent.trim())
+      const title = titleRaw.replace(' : ', ': ').replace(' /', '').replace("'", '&rsquo;')
       const outDate = displayDate(outDateRaw)
       const dueDate = displayDate(dueDateRaw)
       const isOverdue = dueDateRaw < today

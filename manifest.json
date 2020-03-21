@@ -15,7 +15,7 @@
       "js": [ "content-login.js" ]
     },
     {
-      "matches": [ "http://circ.libraryworld.com/cgi-bin/selfservice.pl" ],
+      "matches": [ "http://circ.libraryworld.com/cgi-bin/selfservice.pl*" ],
       "css": [
         "blank.css",
         "content-checkout.css"

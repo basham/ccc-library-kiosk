@@ -79,14 +79,20 @@ h1 {
 h2 {
   font-size: 2rem;
   line-height: 2.5rem;
-  margin: 2rem 0 0;
+  margin: 2.5rem 0 0;
   position: relative;
 }
 
 h2 > .icon {
   left: -2ch;
   position: absolute;
-  top: 0.25rem;
+}
+
+h3 {
+  font-size: 1.5rem;
+  font-weight: normal;
+  line-height: 2rem;
+  margin: 2rem 0 0;
 }
 
 hr {
@@ -105,6 +111,29 @@ ol,
 ul {
   margin: 1rem 0 0;
   padding: 0;
+}
+
+dl {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0;
+}
+
+dl > div {
+  margin: 1rem 2rem 0 0;
+}
+
+dt {
+  font-weight: bold;
+}
+
+dd {
+  margin: 0;
+}
+
+.book-jacket {
+  float: right;
+  margin: 1.5rem 0 0 1rem;
 }
 
 a {
@@ -148,4 +177,9 @@ button {
   align-items: center;
   display: flex;
   margin-top: 1rem;
+}
+
+.highlight {
+  background-color: var(--color-highlight);
+  padding: 0 0.5ch;
 }

@@ -74,6 +74,9 @@ function markActivity () {
 }
 
 function reset () {
+  if (timeoutNotice.hasAttribute('hidden')) {
+    return
+  }
   lastFocus.focus()
   timeoutNotice.setAttribute('hidden', 'true')
   document.body.style.overflow = lastBodyOverflow

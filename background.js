@@ -20,5 +20,5 @@ function resetTimeouts () {
 }
 
 chrome.windows.onCreated.addListener(({ id }) => {
-  chrome.windows.update(id, { state: 'fullscreen' })
+  //chrome.windows.update(id, { state: 'fullscreen' })
 })

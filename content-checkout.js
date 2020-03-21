@@ -20,16 +20,14 @@ container.innerHTML = `
   <main>
     <h1>Scan your library card</h1>
     <form method="GET" action="/cgi-bin/selfservice.pl" autocomplete="off">
-      <div class="control control--small">
+      <div class="ecclib-width-small">
         <label for="library-card-number">
           Library card number
           <small>2000XXXX</small>
         </label>
         <input type="text" name="term" id="library-card-number" value="">
       </div>
-      <div class="button-group">
-        <button type="submit">Continue</button>
-      </div>
+      <button type="submit">Continue</button>
       <input type="hidden" name="goodpatron" value="">
       <input type="hidden" name="command" value="checkout">
     </form>

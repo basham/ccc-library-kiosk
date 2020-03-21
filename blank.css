@@ -114,6 +114,7 @@ a {
 label {
   display: block;
   font-weight: bold;
+  margin-top: 1rem;
 }
 
 small {
@@ -135,14 +136,11 @@ button {
   border-radius: 0.25rem;
   color: var(--color-white);
   font-weight: bold;
+  margin: 1rem 0 0;
   padding: 0.75rem 1rem;
 }
 
-.control {
-  margin-top: 1rem;
-}
-
-.control--small {
+.ecclib-width-small {
   max-width: 12rem;
 }
 

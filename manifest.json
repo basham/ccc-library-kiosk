@@ -15,6 +15,14 @@
       "js": [ "content-login.js" ]
     },
     {
+      "matches": [ "http://circ.libraryworld.com/cgi-bin/selfservice.pl" ],
+      "css": [
+        "blank.css",
+        "content-checkout.css"
+      ],
+      "js": [ "content-checkout.js" ]
+    },
+    {
       "matches": [ "<all_urls>" ],
       "js": [ "content-timeout.js" ]
     }
@@ -26,6 +34,9 @@
   "permissions": [
     "storage",
     "tabs"
+  ],
+  "web_accessible_resources": [
+    "ecc-logo-white.png"
   ],
   "manifest_version": 2
 }

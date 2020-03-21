@@ -1,0 +1,45 @@
+label {
+  display: block;
+  font-size: calc(18rem/16);
+  font-weight: bold;
+  line-height: calc(24rem/16);
+  margin-bottom: 0.5rem;
+}
+
+input {
+  border: calc(1rem/16) solid var(--color-black);
+  font-size: calc(18rem/16);
+  padding: 0.5rem;
+  width: 100%;
+}
+
+button {
+  background-color: var(--color-orange);
+  border: none;
+  border-radius: 0.25rem;
+  color: var(--color-white);
+  font-size: calc(18rem/16);
+  font-weight: bold;
+  padding: 0.75rem 1rem;
+}
+
+.control {
+  margin-top: 1rem;
+}
+
+.control--small {
+  max-width: 12rem;
+}
+
+.hint {
+  color: #666666;
+  display: block;
+  font-weight: normal;
+  line-height: calc(24rem/16);
+}
+
+.button-group {
+  align-items: center;
+  display: flex;
+  margin-top: 1rem;
+}

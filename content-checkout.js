@@ -107,6 +107,18 @@ function renderPatron () {
   const error = document.querySelector('font[color="#ff0000"]')
   const errorMessage = error ? error.textContent.toLowerCase() : ''
   const isInvalid = errorMessage.includes('invalid')
+  const isNotAvailable = errorMessage.includes('not available')
+
+  const success = document.querySelector('font[color="#347c17"]')
+  const successMessage = success ? success.textContent.toLowerCase() : ''
+  const isCheckedOut = successMessage.includes('checked out')
+
+  const alertMessage = [
+    isInvalid ? '😱 Item not found' : '',
+    isNotAvailable ? '😱 Item already checked out' : '',
+    isCheckedOut ? '✅ Item successfully checked out' : ''
+  ]
+    .filter((message) => message.length)[0] || ''
 
   const goodpatron = document.querySelector('input[name="goodpatron"]').value
 
@@ -130,6 +142,7 @@ function renderPatron () {
 
   const title = 'Check out'
   const content = `
+    ${renderAlert(alertMessage)}
     <h1>${title}</h1>
     <form method="GET" action="/cgi-bin/selfservice.pl" autocomplete="off">
       <div>
@@ -170,6 +183,17 @@ function renderPatron () {
   `
   render({ title, content })
   document.getElementById('item-number').focus()
+}
+
+function renderAlert (message) {
+  if (!message) {
+    return ''
+  }
+  return `
+    <div class="alert">
+      <h2>${message}</h2>
+    </div>
+  `
 }
 
 function renderCheckouts (checkouts) {

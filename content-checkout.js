@@ -25,10 +25,9 @@ container.innerHTML = `
           Library card number
           <small>2000XXXX</small>
         </label>
-        <input type="text" name="term" id="library-card-number" value="">
+        <input type="text" name="term" id="library-card-number">
       </div>
       <button type="submit">Continue</button>
-      <input type="hidden" name="goodpatron" value="">
       <input type="hidden" name="command" value="checkout">
     </form>
     <hr />

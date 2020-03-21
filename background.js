@@ -7,3 +7,14 @@ chrome.runtime.onMessage.addListener((message) => {
     chrome.tabs.create({ index: 0 })
   }
 })
+
+chrome.tabs.onUpdated.addListener(resetTimeouts)
+chrome.tabs.onActivated.addListener(resetTimeouts)
+
+function resetTimeouts () {
+  chrome.tabs.query({}, (tabs) => {
+    tabs.forEach(({ id, active }) => {
+      chrome.tabs.sendMessage(id, active ? 'startTimeout' : 'stopTimeout')
+    })
+  })
+}

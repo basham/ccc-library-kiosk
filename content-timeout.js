@@ -1,26 +1,54 @@
-const showTimeout = 1000 * 5
-const confirmTimeout = 1000 * 5
+const showTimeout = 1000 * 60 * 2 // 2 minutes
+const confirmTimeout = 1000 * 20 // 20 seconds
+let started = false
 let lastActivity = null
-let timeoutNotice = document.createElement('div')
-let lastFocus = document.activeElement
-let lastBodyOverflow = document.body.style.overflow
+let timeoutNotice = null
+let lastFocus = null
+let lastBodyOverflow = null
+let timer = null
 
-renderTimoutNotice()
-markActivity()
+const messageResponses = {
+  startTimeout,
+  stopTimeout
+}
 
-document.addEventListener('mousemove', () => {
-  markActivity()
+chrome.runtime.onMessage.addListener((message) => {
+  const fn = messageResponses[message]
+  if (fn) {
+    fn()
+  }
 })
 
-document.addEventListener('click', () => {
+function startTimeout () {
+  if (started) {
+    return
+  }
+  timeoutNotice = document.createElement('div')
+  lastFocus = document.activeElement
+  lastBodyOverflow = document.body.style.overflow
+  renderTimoutNotice()
   markActivity()
-})
+  document.addEventListener('mousemove', markActivity)
+  document.addEventListener('click', markActivity)
+  document.addEventListener('keyup', markActivity)
+  timer = setInterval(checkTimer, 1000)
+  started = true
+}
 
-document.addEventListener('keyup', () => {
-  markActivity()
-})
+function stopTimeout () {
+  if (!started) {
+    return
+  }
+  document.removeEventListener('mousemove', markActivity)
+  document.removeEventListener('click', markActivity)
+  document.removeEventListener('keyup', markActivity)
+  clearInterval(timer)
+  reset()
+  timeoutNotice.remove()
+  started = false
+}
 
-const timer = setInterval(() => {
+function checkTimer () {
   const lastActivityDiff = new Date() - lastActivity
   const totalTimeout = showTimeout + confirmTimeout
   const count = Math.ceil((totalTimeout - lastActivityDiff) / 1000)
@@ -36,13 +64,16 @@ const timer = setInterval(() => {
   }
 
   if (lastActivityDiff >= totalTimeout) {
-    clearInterval(timer)
     chrome.runtime.sendMessage('timeout')
   }
-}, 1000)
+}
 
 function markActivity () {
   lastActivity = new Date()
+  reset()
+}
+
+function reset () {
   lastFocus.focus()
   timeoutNotice.setAttribute('hidden', 'true')
   document.body.style.overflow = lastBodyOverflow

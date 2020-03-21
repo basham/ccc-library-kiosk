@@ -12,7 +12,7 @@ document.body.appendChild(container)
 
 container.innerHTML = `
   <header>
-    <a href="#" class="logo">
+    <a href="${chrome.runtime.getURL('blank.html')}" class="logo">
       <img src="${chrome.runtime.getURL('ecc-logo-white.png')}" alt="Evangelical Community Church" />
       <span>Library</span>
     </a>

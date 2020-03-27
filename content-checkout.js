@@ -113,11 +113,11 @@ function renderScanCard () {
       Need to sign up for a card?
     </h2>
     <p>Fill out either the online <a href="https://docs.google.com/forms/d/e/1FAIpQLSdoM9GqJE4YglUEOQdWIfeLyvxV6oOt8DuQ9fgOHOXT8zcsGw/viewform">Library Card Signup Form</a> or the paper form.</p>
-    <p>Expect the card to be printed and placed in the filing box within a week. If you want to check out books or other materials today, ask a <b>library helper</b> for assistance. If no one is available, write down:</p>
+    <p>Expect the card to be printed and placed in the filing box within a week. If you want to check out items today, ask a <b>library helper</b> for assistance. If no one is available, write down:</p>
     <ol>
       <li>Your name, email, and phone number</li>
       <li>Current date</li>
-      <li>Titles and barcode numbers (located in the upper left back corner, in the format of <b>3000XXXX</b>) of any books and materials you are borrowing</li>
+      <li>Titles and barcode numbers (located in the upper left back corner, in the format of <b>3000XXXX</b>) of any items you are borrowing</li>
     </ol>
   `
   render({ title, content, hasError, alertMessage })

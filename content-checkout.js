@@ -1,9 +1,7 @@
 init()
 
 function init () {
-  document.querySelectorAll('body > *').forEach((el) => {
-    //el.setAttribute('hidden', 'true')
-  })
+  // Remove provided styling
   document.querySelectorAll('link').forEach((el) => {
     el.remove()
   })
@@ -13,15 +11,11 @@ function init () {
   const term = params.get('term')
   const props = { command, term }
 
-  if (!command && !term) {
+  if (isScanCardPage()) {
     return renderScanCard(props)
   }
 
-  if (command === 'checkout' && !term) {
-    return renderScanCard(props)
-  }
-
-  if (command === 'checkout' && term) {
+  if (command === 'checkout') {
     return renderPatron(props)
   }
 
@@ -30,12 +24,21 @@ function init () {
   }
 }
 
+function isScanCardPage () {
+  try {
+    return document.querySelector('form').childNodes[0].textContent.trim() === 'Enter Patron Number:'
+  } catch {
+    return false
+  }
+}
+
 function render ({ title, content, hasError = false, alertMessage = '' }) {
-  const name = 'Evangelical Community Church Library'
+  const name = 'ECC Library'
 
   document.title = `${hasError ? 'Error: ' : ''}${title} - ${name}`
 
   const container = document.createElement('div')
+  container.classList.add('ecclib-page')
   container.innerHTML = `
     <header>
       <a href="${chrome.runtime.getURL('blank.html')}" class="logo">
@@ -53,6 +56,16 @@ function render ({ title, content, hasError = false, alertMessage = '' }) {
 }
 
 function renderScanCard () {
+  const error = document.querySelector('font[color="#ff0000"]')
+  const errorMessage = error ? error.textContent.toLowerCase() : ''
+  const isInvalid = errorMessage.includes('patron verification')
+  const hasError = isInvalid
+
+  const alertMessage = [
+    isInvalid ? '😱 Library card number not found' : ''
+  ]
+    .filter((message) => message.length)[0] || ''
+
   const title = 'Scan your library card'
   const content = `
     <form method="GET" action="/cgi-bin/selfservice.pl" autocomplete="off">
@@ -61,9 +74,10 @@ function renderScanCard () {
           Library card number
           <small>2000XXXX</small>
         </label>
-        <input type="text" name="term" id="library-card-number" class="ecclib-width-small" pattern="2\\d{7}" maxlength="8">
+        <input type="text" name="term" id="library-card-number" class="ecclib-width-small" pattern="2\\d{7}" maxlength="8" />
       </div>
       <button type="submit">Continue</button>
+      <input type="hidden" name="goodpatron" value="">
       <input type="hidden" name="command" value="checkout">
     </form>
     <hr />
@@ -106,7 +120,7 @@ function renderScanCard () {
       <li>Titles and barcode numbers (located in the upper left back corner, in the format of <b>3000XXXX</b>) of any books and materials you are borrowing</li>
     </ol>
   `
-  render({ title, content })
+  render({ title, content, hasError, alertMessage })
   document.getElementById('library-card-number').focus()
 }
 
@@ -154,8 +168,8 @@ function renderPatron () {
     <form method="GET" action="/cgi-bin/selfservice.pl" autocomplete="off">
       ${renderBookBarcodeField()}
       <button type="submit">Check out</button>
-      <input type="hidden" name="goodpatron" value="${goodpatron}">
-      <input type="hidden" name="command" value="checkout">
+      <input type="hidden" name="goodpatron" value="${goodpatron}" />
+      <input type="hidden" name="command" value="checkout" />
     </form>
     <hr />
     <h2>
@@ -251,11 +265,12 @@ function renderCheckIn () {
     <form method="GET" action="/cgi-bin/selfservice.pl" autocomplete="off">
       ${renderBookBarcodeField()}
       <button type="submit">Check in</button>
-      <input type="hidden" name="command" value="checkin">
+      <input type="hidden" name="command" value="checkin" />
     </form>
     ${renderCheckins(checkins)}
   `
   render({ title, content, hasError, alertMessage })
+  document.getElementById('item-number').focus()
 }
 
 function renderCheckins (checkins) {
@@ -316,7 +331,7 @@ function renderBookBarcodeField () {
         <small>3000XXXX</small>
         <small>Located in the upper left back corner</small>
       </label>
-      <input type="text" name="term" id="item-number" class="ecclib-width-small" pattern="3\\d{7}" maxlength="8">
+      <input type="text" name="term" id="item-number" class="ecclib-width-small" pattern="3\\d{7}" maxlength="8" />
     </div>
   `
 }

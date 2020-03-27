@@ -12,13 +12,15 @@
   "content_scripts": [
     {
       "matches": [ "http://circ.libraryworld.com/selfservice.html" ],
+      "css": [
+        "content.css"
+      ],
       "js": [ "content-login.js" ]
     },
     {
       "matches": [ "http://circ.libraryworld.com/cgi-bin/selfservice.pl*" ],
       "css": [
-        "blank.css",
-        "content-checkout.css"
+        "content.css"
       ],
       "js": [ "content-checkout.js" ]
     },

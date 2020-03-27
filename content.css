@@ -41,6 +41,13 @@ body {
   margin: 0;
 }
 
+/* Hide all provided content */
+body > table,
+body > hr,
+body > br {
+  display: none;
+}
+
 header {
   background-color: var(--color-purple);
   border-bottom: calc(1rem/16) solid var(--color-black);

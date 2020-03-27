@@ -24,12 +24,16 @@ function init () {
   if (command === 'checkout' && term) {
     return renderPatron(props)
   }
+
+  if (command === 'checkin') {
+    return renderCheckIn(props)
+  }
 }
 
-function render ({ title, content }) {
+function render ({ title, content, hasError = false, alertMessage = '' }) {
   const name = 'Evangelical Community Church Library'
 
-  document.title = [ title, name ].join(' - ')
+  document.title = `${hasError ? 'Error: ' : ''}${title} - ${name}`
 
   const container = document.createElement('div')
   container.innerHTML = `
@@ -39,7 +43,11 @@ function render ({ title, content }) {
         <span>Library</span>
       </a>
     </header>
-    <main>${content}</main>
+    <main>
+      ${renderAlert(alertMessage)}
+      <h1>${title}</h1>
+      ${content}
+    </main>
   `
   document.body.appendChild(container)
 }
@@ -47,7 +55,6 @@ function render ({ title, content }) {
 function renderScanCard () {
   const title = 'Scan your library card'
   const content = `
-    <h1>${title}</h1>
     <form method="GET" action="/cgi-bin/selfservice.pl" autocomplete="off">
       <div>
         <label for="library-card-number">
@@ -108,6 +115,7 @@ function renderPatron () {
   const errorMessage = error ? error.textContent.toLowerCase() : ''
   const isInvalid = errorMessage.includes('invalid')
   const isNotAvailable = errorMessage.includes('not available')
+  const hasError = isInvalid || isNotAvailable
 
   const success = document.querySelector('font[color="#347c17"]')
   const successMessage = success ? success.textContent.toLowerCase() : ''
@@ -115,7 +123,7 @@ function renderPatron () {
 
   const alertMessage = [
     isInvalid ? '😱 Item not found' : '',
-    isNotAvailable ? '😱 Item already checked out' : '',
+    isNotAvailable ? '🤔 Item already checked out' : '',
     isCheckedOut ? '✅ Item successfully checked out' : ''
   ]
     .filter((message) => message.length)[0] || ''
@@ -134,7 +142,7 @@ function renderPatron () {
     .map((row) => {
       const [ status, barcode, titleRaw, callNumber, outDateRaw, dueDateRaw ] = [ ...row.childNodes ]
         .map((el) => el.textContent.trim())
-      const title = titleRaw.replace(' : ', ': ').replace(' /', '').replace("'", '&rsquo;')
+        const title = displayTitle(titleRaw)
       const outDate = displayDate(outDateRaw)
       const dueDate = displayDate(dueDateRaw)
       const isOverdue = dueDateRaw < today
@@ -143,17 +151,8 @@ function renderPatron () {
 
   const title = 'Check out'
   const content = `
-    ${renderAlert(alertMessage)}
-    <h1>${title}</h1>
     <form method="GET" action="/cgi-bin/selfservice.pl" autocomplete="off">
-      <div>
-        <label for="item-number">
-          Book barcode
-          <small>3000XXXX</small>
-          <small>Located in the upper left back corner</small>
-        </label>
-        <input type="text" name="term" id="item-number" class="ecclib-width-small" pattern="3\\d{7}" maxlength="8">
-      </div>
+      ${renderBookBarcodeField()}
       <button type="submit">Check out</button>
       <input type="hidden" name="goodpatron" value="${goodpatron}">
       <input type="hidden" name="command" value="checkout">
@@ -182,19 +181,8 @@ function renderPatron () {
     </h2>
     ${renderCheckouts(checkouts)}
   `
-  render({ title, content })
+  render({ title, content, hasError, alertMessage })
   document.getElementById('item-number').focus()
-}
-
-function renderAlert (message) {
-  if (!message) {
-    return ''
-  }
-  return `
-    <div class="alert">
-      <h2>${message}</h2>
-    </div>
-  `
 }
 
 function renderCheckouts (checkouts) {
@@ -205,7 +193,7 @@ function renderCheckouts (checkouts) {
 }
 
 function renderCheckout (checkout) {
-  const { title, outDate, dueDate, callNumber, barcode, isOverdue } = checkout
+  const { title, outDate, dueDate, barcode, isOverdue } = checkout
   return `
     <h3>${title}</h3>
     <dl>
@@ -219,8 +207,89 @@ function renderCheckout (checkout) {
         ${isOverdue ? '<dd class="highlight">⌛ Overdue!</dd>' : ''}
       </div>
       <div>
-        <dt>Call number</dt>
-        <dd>${callNumber}</dd>
+        <dt>Barcode</dt>
+        <dd>${barcode}</dd>
+      </div>
+    </dl>
+  `
+}
+
+function renderCheckIn () {
+  const error = document.querySelector('font[color="#ff0000"]')
+  const errorMessage = error ? error.textContent.toLowerCase() : ''
+  const isInvalid = errorMessage.includes('invalid')
+  const isNotCheckedOut = errorMessage.includes('not checked out')
+  const hasError = isInvalid || isNotCheckedOut
+
+  const success = document.querySelector('font[color="#347c17"]')
+  const successMessage = success ? success.textContent.toLowerCase() : ''
+  const isCheckedIn = successMessage.includes('checked in')
+
+  const alertMessage = [
+    isInvalid ? '😱 Item not found' : '',
+    isNotCheckedOut ? '🤔 Item already checked in' : '',
+    isCheckedIn ? '✅ Item successfully checked in' : ''
+  ]
+    .filter((message) => message.length)[0] || ''
+
+  const today = (new Date()).toJSON().substring(0, 10)
+  const checkins = [ ...document.querySelectorAll('form ~ table tr') ]
+    .filter((row, index) => index > 0)
+    .map((row) => {
+      const [ barcode, titleRaw, outDateRaw, dueDateRaw, libaryCardNumber, patronName, type, code ] = [ ...row.childNodes ]
+        .map((el) => el.textContent.trim())
+      const title = displayTitle(titleRaw)
+      const outDate = displayDate(outDateRaw)
+      const dueDate = displayDate(dueDateRaw)
+      const inDate = displayDate(today)
+      const isOverdue = dueDateRaw < today
+      return { barcode, title, outDate, dueDate, inDate, isOverdue, libaryCardNumber, patronName, type, code }
+    })
+
+  const title = 'Check in'
+  const content = `
+    <form method="GET" action="/cgi-bin/selfservice.pl" autocomplete="off">
+      ${renderBookBarcodeField()}
+      <button type="submit">Check in</button>
+      <input type="hidden" name="command" value="checkin">
+    </form>
+    ${renderCheckins(checkins)}
+  `
+  render({ title, content, hasError, alertMessage })
+}
+
+function renderCheckins (checkins) {
+  if (!checkins.length) {
+    return ''
+  }
+  return `
+    <hr />
+    <h2>
+      <span class="icon" aria-hidden="true">📚</span>
+      Checkins
+    </h2>
+    ${checkins.map(renderCheckin).join('')}
+  `
+}
+
+function renderCheckin (checkin) {
+  const { barcode, title, outDate, inDate, isOverdue, libaryCardNumber, patronName } = checkin
+  return `
+    <h3>${title}</h3>
+    <dl>
+      <div>
+        <dt>Patron</dt>
+        <dd>${patronName}</dd>
+        <dd>${libaryCardNumber}</dd>
+      </div>
+      <div>
+        <dt>Out date</dt>
+        <dd>${outDate}</dd>
+      </div>
+      <div>
+        <dt>In date</dt>
+        <dd>${inDate}</dd>
+        ${isOverdue ? '<dd class="highlight">⌛ Overdue!</dd>' : ''}
       </div>
       <div>
         <dt>Barcode</dt>
@@ -228,6 +297,32 @@ function renderCheckout (checkout) {
       </div>
     </dl>
   `
+}
+
+function renderAlert (message) {
+  if (!message) {
+    return ''
+  }
+  return `
+    <h1 class="alert">${message}</h1>
+  `
+}
+
+function renderBookBarcodeField () {
+  return `
+    <div>
+      <label for="item-number">
+        Book barcode
+        <small>3000XXXX</small>
+        <small>Located in the upper left back corner</small>
+      </label>
+      <input type="text" name="term" id="item-number" class="ecclib-width-small" pattern="3\\d{7}" maxlength="8">
+    </div>
+  `
+}
+
+function displayTitle (value) {
+  return value.replace(' : ', ': ').replace(' /', '').replace("'", '&rsquo;')
 }
 
 function displayDate (value) {

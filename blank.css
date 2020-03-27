@@ -186,12 +186,8 @@ button {
 
 .alert {
   background-color: var(--color-highlight);
-  padding: 1rem;
-  margin-bottom: 2rem;
-}
-
-.alert h2 {
   font-size: 1.5rem;
   line-height: 2rem;
-  margin: 0;
+  margin: 0 0 2rem;
+  padding: 1rem;
 }

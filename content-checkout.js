@@ -6,6 +6,12 @@ function init () {
     el.remove()
   })
 
+  const iconLink = document.createElement('link')
+  iconLink.href = chrome.runtime.getURL('icon128.png')
+  iconLink.rel = 'icon'
+  iconLink.type = 'image/png'
+  document.head.appendChild(iconLink)
+
   const params = (new URL(document.location)).searchParams
   const command = params.get('command')
   const term = params.get('term')
@@ -38,7 +44,6 @@ function render ({ title, content, hasError = false, alertMessage = '' }) {
   document.title = `${hasError ? 'Error: ' : ''}${title} - ${name}`
 
   const container = document.createElement('div')
-  container.classList.add('ecclib-page')
   container.innerHTML = `
     <header>
       <a href="${chrome.runtime.getURL('blank.html')}" class="logo">
@@ -74,7 +79,7 @@ function renderScanCard () {
           Library card number
           <small>2000XXXX</small>
         </label>
-        <input type="text" name="term" id="library-card-number" class="ecclib-width-small" pattern="2\\d{7}" maxlength="8" />
+        <input type="text" name="term" id="library-card-number" pattern="2\\d{7}" maxlength="8" />
       </div>
       <button type="submit">Continue</button>
       <input type="hidden" name="goodpatron" value="">
@@ -331,7 +336,7 @@ function renderBookBarcodeField () {
         <small>3000XXXX</small>
         <small>Located in the upper left back corner</small>
       </label>
-      <input type="text" name="term" id="item-number" class="ecclib-width-small" pattern="3\\d{7}" maxlength="8" />
+      <input type="text" name="term" id="item-number" pattern="3\\d{7}" maxlength="8" />
     </div>
   `
 }

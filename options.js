@@ -23,7 +23,7 @@ document.getElementById('login').addEventListener('submit', (event) => {
     libraryName
   }, () => {
     const status = document.getElementById('status');
-    status.textContent = '✔ Options saved';
+    status.textContent = 'Saved';
     setTimeout(() => {
       status.textContent = ''
     }, 5000)

@@ -55,20 +55,6 @@ header {
   text-align: center;
 }
 
-a.logo {
-  align-items: center;
-  display: inline-flex;
-  padding: 0.5rem;
-  text-decoration: none;
-}
-
-a.logo span {
-  color: var(--color-white);
-  font-size: 2.5rem;
-  font-weight: bold;
-  margin-left: 2rem;
-}
-
 main {
   font-size: calc(18rem/16);
   line-height: calc(28rem/16);
@@ -138,11 +124,6 @@ dd {
   margin: 0;
 }
 
-.book-jacket {
-  float: right;
-  margin: 1.5rem 0 0 1rem;
-}
-
 a {
   color: var(--color-orange);
 }
@@ -162,6 +143,7 @@ small {
 input {
   border: calc(1rem/16) solid var(--color-black);
   margin-top: 0.5rem;
+  max-width: 12rem;
   padding: 0.5rem;
   width: 100%;
 }
@@ -176,14 +158,31 @@ button {
   padding: 0.75rem 1rem;
 }
 
-.ecclib-width-small {
-  max-width: 12rem;
+.logo {
+  align-items: center;
+  display: inline-flex;
+  padding: 0.5rem;
+  text-decoration: none;
 }
 
-.button-group {
+.logo span {
+  color: var(--color-white);
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-left: 2rem;
+}
+
+.row {
   align-items: center;
   display: flex;
+}
+
+.row > * {
   margin-top: 1rem;
+}
+
+.row > * + * {
+  margin-left: 1rem;
 }
 
 .highlight {
@@ -197,4 +196,9 @@ button {
   line-height: 2rem;
   margin: 0 0 2rem;
   padding: 1rem;
+}
+
+.book-jacket {
+  float: right;
+  margin: 1.5rem 0 0 1rem;
 }

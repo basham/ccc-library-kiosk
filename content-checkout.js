@@ -1,3 +1,7 @@
+const url = '/cgi-bin/selfservice.pl'
+const errorSelector = 'font[color="#ff0000"]'
+const successSelector = 'font[color="#347c17"]'
+
 init()
 
 function init () {
@@ -15,18 +19,28 @@ function init () {
   const params = (new URL(document.location)).searchParams
   const command = params.get('command')
   const term = params.get('term')
-  const props = { command, term }
+  const renew = params.get('renew')
+  const goodpatron = params.get('goodpatron')
+  const props = { command, term, renew }
 
   if (isScanCardPage()) {
     return renderScanCard(props)
   }
 
-  if (command === 'checkout') {
-    return renderPatron(props)
+  // Renew
+  if (command === 'checkin' && goodpatron) {
+    const error = document.querySelector(errorSelector)
+    const next = error ? 'error' : 'success'
+    window.location.replace(`${url}?term=${term}&goodpatron=${goodpatron}&command=checkout&renew=${next}`)
+    return
   }
 
   if (command === 'checkin') {
     return renderCheckIn(props)
+  }
+
+  if (command === 'checkout') {
+    return renderPatron(props)
   }
 }
 
@@ -61,7 +75,7 @@ function render ({ title, content, hasError = false, alertMessage = '' }) {
 }
 
 function renderScanCard () {
-  const error = document.querySelector('font[color="#ff0000"]')
+  const error = document.querySelector(errorSelector)
   const errorMessage = error ? error.textContent.toLowerCase() : ''
   const isInvalid = errorMessage.includes('patron verification')
   const hasError = isInvalid
@@ -73,7 +87,7 @@ function renderScanCard () {
 
   const title = 'Scan your library card'
   const content = `
-    <form method="GET" action="/cgi-bin/selfservice.pl" autocomplete="off">
+    <form method="GET" action="${url}" autocomplete="off">
       <div>
         <label for="library-card-number">
           Library card number
@@ -129,20 +143,24 @@ function renderScanCard () {
   document.getElementById('library-card-number').focus()
 }
 
-function renderPatron () {
-  const error = document.querySelector('font[color="#ff0000"]')
+function renderPatron (props) {
+  const error = document.querySelector(errorSelector)
   const errorMessage = error ? error.textContent.toLowerCase() : ''
   const isInvalid = errorMessage.includes('invalid')
   const isNotAvailable = errorMessage.includes('not available')
-  const hasError = isInvalid || isNotAvailable
+  const didNotRenew = props.renew === 'error'
+  const hasError = isInvalid || isNotAvailable || didNotRenew
 
-  const success = document.querySelector('font[color="#347c17"]')
+  const success = document.querySelector(successSelector)
   const successMessage = success ? success.textContent.toLowerCase() : ''
   const isCheckedOut = successMessage.includes('checked out')
+  const didRenew = props.renew === 'success'
 
   const alertMessage = [
+    didNotRenew ? '😱 Item could not be renewed' : '',
     isInvalid ? '😱 Item not found' : '',
     isNotAvailable ? '🤔 Item already checked out' : '',
+    didRenew ? '✅ Item successfully renewed' : '',
     isCheckedOut ? '✅ Item successfully checked out' : ''
   ]
     .filter((message) => message.length)[0] || ''
@@ -165,12 +183,12 @@ function renderPatron () {
       const outDate = displayDate(outDateRaw)
       const dueDate = displayDate(dueDateRaw)
       const isOverdue = dueDateRaw < today
-      return { barcode, title, callNumber, outDate, dueDate, isOverdue }
+      return { barcode, title, callNumber, outDate, dueDate, isOverdue, goodpatron }
     })
 
   const title = 'Check out'
   const content = `
-    <form method="GET" action="/cgi-bin/selfservice.pl" autocomplete="off">
+    <form method="GET" action="${url}" autocomplete="off">
       ${renderBookBarcodeField()}
       <button type="submit">Check out</button>
       <input type="hidden" name="goodpatron" value="${goodpatron}" />
@@ -212,7 +230,7 @@ function renderCheckouts (checkouts) {
 }
 
 function renderCheckout (checkout) {
-  const { title, outDate, dueDate, barcode, isOverdue } = checkout
+  const { title, outDate, dueDate, barcode, isOverdue, goodpatron } = checkout
   return `
     <h3>${title}</h3>
     <dl>
@@ -230,17 +248,20 @@ function renderCheckout (checkout) {
         <dd>${barcode}</dd>
       </div>
     </dl>
+    <div>
+      <a href="${url}?term=${barcode}&goodpatron=${goodpatron}&command=checkin" class="button">Renew</a>
+    </div>
   `
 }
 
 function renderCheckIn () {
-  const error = document.querySelector('font[color="#ff0000"]')
+  const error = document.querySelector(errorSelector)
   const errorMessage = error ? error.textContent.toLowerCase() : ''
   const isInvalid = errorMessage.includes('invalid')
   const isNotCheckedOut = errorMessage.includes('not checked out')
   const hasError = isInvalid || isNotCheckedOut
 
-  const success = document.querySelector('font[color="#347c17"]')
+  const success = document.querySelector(successSelector)
   const successMessage = success ? success.textContent.toLowerCase() : ''
   const isCheckedIn = successMessage.includes('checked in')
 
@@ -267,7 +288,7 @@ function renderCheckIn () {
 
   const title = 'Check in'
   const content = `
-    <form method="GET" action="/cgi-bin/selfservice.pl" autocomplete="off">
+    <form method="GET" action="${url}" autocomplete="off">
       ${renderBookBarcodeField()}
       <button type="submit">Check in</button>
       <input type="hidden" name="command" value="checkin" />

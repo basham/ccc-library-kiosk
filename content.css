@@ -148,14 +148,17 @@ input {
   width: 100%;
 }
 
-button {
+button,
+.button {
   background-color: var(--color-orange);
   border: none;
   border-radius: 0.25rem;
   color: var(--color-white);
+  display: inline-block;
   font-weight: bold;
   margin: 1rem 0 0;
   padding: 0.75rem 1rem;
+  text-decoration: none;
 }
 
 .logo {

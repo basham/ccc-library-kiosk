@@ -201,7 +201,14 @@ button,
   padding: 1rem;
 }
 
-.book-jacket {
-  float: right;
-  margin: 1.5rem 0 0 1rem;
+.book-list {
+  display: grid;
+  grid-auto-flow: row;
+  grid-gap: 0 1rem;
+  grid-template-columns: 1fr 8rem;
+}
+
+.book-cover > img {
+  margin-top: 2rem;
+  width: 100%;
 }

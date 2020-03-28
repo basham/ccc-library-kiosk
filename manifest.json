@@ -25,6 +25,11 @@
       "js": [ "content-checkout.js" ]
     },
     {
+      "matches": [ "https://opac.libraryworld.com/opac/*" ],
+      "all_frames": true,
+      "js": [ "content-opac.js" ]
+    },
+    {
       "matches": [ "<all_urls>" ],
       "js": [ "content-timeout.js" ]
     }

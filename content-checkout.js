@@ -216,10 +216,17 @@ function renderPatron (props) {
       <span class="icon" aria-hidden="true">📚</span>
       Checkouts
     </h2>
-    ${renderCheckouts(checkouts)}
+    <div class="book-list">
+      ${renderCheckouts(checkouts)}
+    </div>
+    ${renderOpac()}
   `
   render({ title, content, hasError, alertMessage })
+
   document.getElementById('item-number').focus()
+
+  const barcodes = checkouts.map(({ barcode }) => barcode)
+  loadBookCovers(barcodes)
 }
 
 function renderCheckouts (checkouts) {
@@ -232,25 +239,28 @@ function renderCheckouts (checkouts) {
 function renderCheckout (checkout) {
   const { title, outDate, dueDate, barcode, isOverdue, goodpatron } = checkout
   return `
-    <h3>${title}</h3>
-    <dl>
-      <div>
-        <dt>Out date</dt>
-        <dd>${outDate}</dd>
-      </div>
-      <div>
-        <dt>Due date</dt>
-        <dd>${dueDate}</dd>
-        ${isOverdue ? '<dd class="highlight">⌛ Overdue!</dd>' : ''}
-      </div>
-      <div>
-        <dt>Barcode</dt>
-        <dd>${barcode}</dd>
-      </div>
-    </dl>
     <div>
-      <a href="${url}?term=${barcode}&goodpatron=${goodpatron}&command=checkin" class="button">Renew</a>
+      <h3>${title}</h3>
+      <dl>
+        <div>
+          <dt>Out date</dt>
+          <dd>${outDate}</dd>
+        </div>
+        <div>
+          <dt>Due date</dt>
+          <dd>${dueDate}</dd>
+          ${isOverdue ? '<dd class="highlight">⌛ Overdue!</dd>' : ''}
+        </div>
+        <div>
+          <dt>Barcode</dt>
+          <dd>${barcode}</dd>
+        </div>
+      </dl>
+      <div>
+        <a href="${url}?term=${barcode}&goodpatron=${goodpatron}&command=checkin" class="button">Renew</a>
+      </div>
     </div>
+    <div class="book-cover" data-barcode=${barcode}></div>
   `
 }
 
@@ -360,6 +370,46 @@ function renderBookBarcodeField () {
       <input type="text" name="term" id="item-number" pattern="3\\d{7}" maxlength="8" />
     </div>
   `
+}
+
+function renderOpac () {
+  return `
+    <iframe id="opac" src="https://opac.libraryworld.com/opac/signin.php?libraryname=ECCLIBRARY" hidden></iframe>
+  `
+}
+
+function loadBookCovers (barcodes) {
+  let started = false
+  const opac = document.getElementById('opac')
+
+  opac.addEventListener('load', () => {
+    if (!started) {
+      started = true
+      loadCover()
+    } else {
+      opac.contentWindow.postMessage('bookcover', '*')
+    }
+  })
+
+  window.addEventListener('message', (event) => {
+    if (event.origin !== 'https://opac.libraryworld.com') {
+      return
+    }
+    const cover = document.createElement('img')
+    cover.src = event.data.image
+    const selector = `.book-cover[data-barcode="${event.data.barcode}"]`
+    document.querySelector(selector).appendChild(cover)
+    loadCover()
+  })
+
+  function loadCover () {
+    if (barcodes.length) {
+      const barcode = barcodes.shift()
+      opac.src = `https://opac.libraryworld.com/opac/search.php?term=${barcode}`
+    } else {
+      opac.remove()
+    }
+  }
 }
 
 function displayTitle (value) {

@@ -304,9 +304,14 @@ function renderCheckIn () {
       <input type="hidden" name="command" value="checkin" />
     </form>
     ${renderCheckins(checkins)}
+    ${renderOpac()}
   `
   render({ title, content, hasError, alertMessage })
+
   document.getElementById('item-number').focus()
+
+  const barcodes = checkins.map(({ barcode }) => barcode)
+  loadBookCovers(barcodes)
 }
 
 function renderCheckins (checkins) {
@@ -319,34 +324,39 @@ function renderCheckins (checkins) {
       <span class="icon" aria-hidden="true">📚</span>
       Checkins
     </h2>
-    ${checkins.map(renderCheckin).join('')}
+    <div class="book-list">
+      ${checkins.map(renderCheckin).join('')}
+    </div>
   `
 }
 
 function renderCheckin (checkin) {
   const { barcode, title, outDate, inDate, isOverdue, libaryCardNumber, patronName } = checkin
   return `
-    <h3>${title}</h3>
-    <dl>
-      <div>
-        <dt>Patron</dt>
-        <dd>${patronName}</dd>
-        <dd>${libaryCardNumber}</dd>
-      </div>
-      <div>
-        <dt>Out date</dt>
-        <dd>${outDate}</dd>
-      </div>
-      <div>
-        <dt>In date</dt>
-        <dd>${inDate}</dd>
-        ${isOverdue ? '<dd class="highlight">⌛ Overdue!</dd>' : ''}
-      </div>
-      <div>
-        <dt>Barcode</dt>
-        <dd>${barcode}</dd>
-      </div>
-    </dl>
+    <div>
+      <h3>${title}</h3>
+      <dl>
+        <div>
+          <dt>Patron</dt>
+          <dd>${patronName}</dd>
+          <dd>${libaryCardNumber}</dd>
+        </div>
+        <div>
+          <dt>Out date</dt>
+          <dd>${outDate}</dd>
+        </div>
+        <div>
+          <dt>In date</dt>
+          <dd>${inDate}</dd>
+          ${isOverdue ? '<dd class="highlight">⌛ Overdue!</dd>' : ''}
+        </div>
+        <div>
+          <dt>Barcode</dt>
+          <dd>${barcode}</dd>
+        </div>
+      </dl>
+    </div>
+    <div class="book-cover" data-barcode=${barcode}></div>
   `
 }
 

@@ -173,7 +173,7 @@ function renderPatron (props) {
   const name = `${firstName} ${lastName}`
   const email = patronData[15].textContent.trim()
 
-  const today = (new Date()).toJSON().substring(0, 10)
+  const today = getToday()
   const checkouts = [ ...document.getElementById('checkout_table').querySelectorAll('tr') ]
     .filter((row, index) => index > 0)
     .map((row) => {
@@ -183,7 +183,8 @@ function renderPatron (props) {
       const outDate = displayDate(outDateRaw)
       const dueDate = displayDate(dueDateRaw)
       const isOverdue = dueDateRaw < today
-      return { barcode, title, callNumber, outDate, dueDate, isOverdue, goodpatron }
+      const canRenew = outDateRaw < today
+      return { barcode, title, callNumber, outDate, dueDate, isOverdue, canRenew, goodpatron }
     })
 
   const title = 'Check out'
@@ -236,7 +237,7 @@ function renderCheckouts (checkouts) {
 }
 
 function renderCheckout (checkout) {
-  const { title, outDate, dueDate, barcode, isOverdue, goodpatron } = checkout
+  const { title, outDate, dueDate, barcode, isOverdue } = checkout
   return `
     <div>
       <h3>${title}</h3>
@@ -255,11 +256,21 @@ function renderCheckout (checkout) {
           <dd>${barcode}</dd>
         </div>
       </dl>
-      <div>
-        <a href="${url}?term=${barcode}&goodpatron=${goodpatron}&command=checkin" class="button">Renew</a>
-      </div>
+      ${renderRenewButton(checkout)}
     </div>
     <div class="book-cover" data-barcode=${barcode}></div>
+  `
+}
+
+function renderRenewButton (checkout) {
+  const { canRenew, barcode, goodpatron } = checkout
+  if (!canRenew) {
+    return ''
+  }
+  return `
+    <div>
+      <a href="${url}?term=${barcode}&goodpatron=${goodpatron}&command=checkin" class="button">Renew</a>
+    </div>
   `
 }
 
@@ -281,7 +292,7 @@ function renderCheckIn () {
   ]
     .filter((message) => message.length)[0] || ''
 
-  const today = (new Date()).toJSON().substring(0, 10)
+  const today = getToday()
   const checkins = [ ...document.querySelectorAll('form ~ table tr') ]
     .filter((row, index) => index > 0)
     .map((row) => {
@@ -398,7 +409,6 @@ function renderCover ({ barcode, image }) {
   const container = document.querySelector(selector)
   if (!container.childNodes.length) {
     container.innerHTML = `<img src=${image} alt="" />`
-    console.log('Rendering', barcode)
   }
 }
 
@@ -442,6 +452,11 @@ function loadCovers (barcodes) {
       container.remove()
     }
   }
+}
+
+function getToday () {
+  const today = new Date()
+  return `${today.getFullYear()}-${(today.getMonth() + 1).toString().padStart(2, '0')}-${today.getDate().toString().padStart(2, '0')}`
 }
 
 function displayTitle (value) {

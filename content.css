@@ -141,7 +141,8 @@ small {
 }
 
 input {
-  border: calc(1rem/16) solid var(--color-black);
+  border: calc(2rem/16) solid var(--color-black);
+  line-height: inherit;
   margin-top: 0.5rem;
   max-width: 12rem;
   padding: 0.5rem;
@@ -156,8 +157,9 @@ button,
   color: var(--color-white);
   display: inline-block;
   font-weight: bold;
+  line-height: inherit;
   margin: 1rem 0 0;
-  padding: 0.75rem 1rem;
+  padding: calc(10rem/16) 1rem;
   text-decoration: none;
 }
 

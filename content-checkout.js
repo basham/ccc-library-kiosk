@@ -219,14 +219,13 @@ function renderPatron (props) {
     <div class="book-list">
       ${renderCheckouts(checkouts)}
     </div>
-    ${renderOpac()}
   `
   render({ title, content, hasError, alertMessage })
 
   document.getElementById('item-number').focus()
 
   const barcodes = checkouts.map(({ barcode }) => barcode)
-  loadBookCovers(barcodes)
+  renderCovers(barcodes)
 }
 
 function renderCheckouts (checkouts) {
@@ -304,14 +303,13 @@ function renderCheckIn () {
       <input type="hidden" name="command" value="checkin" />
     </form>
     ${renderCheckins(checkins)}
-    ${renderOpac()}
   `
   render({ title, content, hasError, alertMessage })
 
   document.getElementById('item-number').focus()
 
   const barcodes = checkins.map(({ barcode }) => barcode)
-  loadBookCovers(barcodes)
+  renderCovers(barcodes)
 }
 
 function renderCheckins (checkins) {
@@ -382,14 +380,36 @@ function renderBookBarcodeField () {
   `
 }
 
-function renderOpac () {
-  return `
-    <iframe id="opac" src="https://opac.libraryworld.com/opac/signin.php?libraryname=ECCLIBRARY" hidden></iframe>
-  `
+function renderCovers (barcodes) {
+  // Load images from the index
+  chrome.storage.local.get({ covers: {} }, ({ covers }) => {
+    barcodes.forEach((barcode) => {
+      const image = covers[barcode]
+      if (image) {
+        renderCover({ barcode, image })
+      }
+    })
+    loadCovers(barcodes)
+  })
 }
 
-function loadBookCovers (barcodes) {
+function renderCover ({ barcode, image }) {
+  const selector = `.book-cover[data-barcode="${barcode}"]`
+  const container = document.querySelector(selector)
+  if (!container.childNodes.length) {
+    container.innerHTML = `<img src=${image} alt="" />`
+    console.log('Rendering', barcode)
+  }
+}
+
+function loadCovers (barcodes) {
   let started = false
+
+  const container = document.createElement('div')
+  container.innerHTML = `
+    <iframe id="opac" src="https://opac.libraryworld.com/opac/signin.php?libraryname=ECCLIBRARY" hidden></iframe>
+  `
+  document.body.appendChild(container)
   const opac = document.getElementById('opac')
 
   opac.addEventListener('load', () => {
@@ -405,10 +425,12 @@ function loadBookCovers (barcodes) {
     if (event.origin !== 'https://opac.libraryworld.com') {
       return
     }
-    const cover = document.createElement('img')
-    cover.src = event.data.image
-    const selector = `.book-cover[data-barcode="${event.data.barcode}"]`
-    document.querySelector(selector).appendChild(cover)
+    const { data } = event
+    chrome.storage.local.get({ covers: {} }, ({ covers }) => {
+      covers[data.barcode] = data.image
+      chrome.storage.local.set({ covers })
+    })
+    renderCover(data)
     loadCover()
   })
 
@@ -417,7 +439,7 @@ function loadBookCovers (barcodes) {
       const barcode = barcodes.shift()
       opac.src = `https://opac.libraryworld.com/opac/search.php?term=${barcode}`
     } else {
-      opac.remove()
+      container.remove()
     }
   }
 }

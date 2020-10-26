@@ -213,6 +213,20 @@ button:active,
   padding: 1rem;
 }
 
+.breadcrumbs {
+  display: flex;
+  color: var(--color-dark-gray);
+  flex-wrap: wrap;
+  list-style-type: none;
+  margin: 0 0 0.5rem;
+}
+
+.breadcrumbs > li:not(:last-child)::after {
+  content: '/';
+  color: var(--color-light-gray);
+  padding: 0 0.5rem;
+}
+
 .book-list {
   display: grid;
   grid-auto-flow: row;

@@ -52,7 +52,7 @@ function isScanCardPage () {
   }
 }
 
-function render ({ title, content, hasError = false, alertMessage = '' }) {
+function render ({ breadcrumbs, title, content, hasError = false, alertMessage = '' }) {
   const name = 'ECC Library'
 
   document.title = `${hasError ? 'Error: ' : ''}${title} - ${name}`
@@ -67,11 +67,52 @@ function render ({ title, content, hasError = false, alertMessage = '' }) {
     </header>
     <main>
       ${renderAlert(alertMessage)}
+      ${renderBreadcrumbs({ breadcrumbs, title })}
       <h1>${title}</h1>
       ${content}
     </main>
   `
   document.body.appendChild(container)
+}
+
+function renderAlert (message) {
+  if (!message) {
+    return ''
+  }
+  return `
+    <h1 class="alert">${message}</h1>
+  `
+}
+
+function renderBreadcrumbs (props) {
+  const { breadcrumbs = [], title } = props
+  const items = [
+    ['Home', chrome.runtime.getURL('blank.html')],
+    ...breadcrumbs,
+    [title, '', true]
+  ]
+    .map(([label, url, current = false]) => ({ current, label, url }))
+    .map(renderBreadcrumbsItem)
+    .join('')
+  return `
+    <nav aria-label="Breadcrumbs">
+      <ul class="breadcrumbs">
+        ${items}
+      </ul>
+    </nav>
+  `
+}
+
+function renderBreadcrumbsItem (props) {
+  const { current = false, label, url } = props
+  if (current) {
+    return `
+      <li aria-current="page">${label}</li>
+    `
+  }
+  return `
+    <li><a href="${url}">${label}</a></li>
+  `
 }
 
 function renderScanCard () {
@@ -188,6 +229,9 @@ function renderPatron (props) {
     })
 
   const title = 'Check out'
+  const breadcrumbs = [
+    ['Scan your library card', 'http://circ.libraryworld.com/cgi-bin/selfservice.pl?command=checkout']
+  ]
   const content = `
     <form method="GET" action="${url}" autocomplete="off">
       ${renderBookBarcodeField()}
@@ -221,7 +265,7 @@ function renderPatron (props) {
       ${renderCheckouts(checkouts)}
     </div>
   `
-  render({ title, content, hasError, alertMessage })
+  render({ title, breadcrumbs, content, hasError, alertMessage })
 
   document.getElementById('item-number').focus()
 
@@ -366,15 +410,6 @@ function renderCheckin (checkin) {
       </dl>
     </div>
     <div class="book-cover" data-barcode=${barcode}></div>
-  `
-}
-
-function renderAlert (message) {
-  if (!message) {
-    return ''
-  }
-  return `
-    <h1 class="alert">${message}</h1>
   `
 }
 

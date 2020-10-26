@@ -142,7 +142,6 @@ function renderScanCard () {
       <input type="hidden" name="goodpatron" value="">
       <input type="hidden" name="command" value="checkout">
     </form>
-    <hr />
     <h2>
       <span class="icon" aria-hidden="true">🗃</span>
       Find your card

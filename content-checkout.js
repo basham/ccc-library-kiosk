@@ -230,22 +230,11 @@ function renderPatron (props) {
       return { barcode, title, callNumber, outDate, dueDate, isOverdue, canRenew, goodpatron }
     })
 
-  const title = 'Check out'
+  const title = name
   const breadcrumbs = [
     ['Scan your library card', 'http://circ.libraryworld.com/cgi-bin/selfservice.pl?command=checkout']
   ]
   const content = `
-    <form method="GET" action="${url}" autocomplete="off">
-      ${renderBookBarcodeField()}
-      <button type="submit">Check out</button>
-      <input type="hidden" name="goodpatron" value="${goodpatron}" />
-      <input type="hidden" name="command" value="checkout" />
-    </form>
-    <hr />
-    <h2>
-      <span class="icon" aria-hidden="true">🧑</span>
-      ${name}
-    </h2>
     <dl>
       <div>
         <dt>Email</dt>
@@ -259,6 +248,16 @@ function renderPatron (props) {
     <p>
       <a href="${chrome.runtime.getURL('blank.html')}">Log out</a>
     </p>
+    <h2>
+      <span class="icon" aria-hidden="true">📗</span>
+      Check out
+    </h2>
+    <form method="GET" action="${url}" autocomplete="off">
+      ${renderBookBarcodeField()}
+      <button type="submit">Check out</button>
+      <input type="hidden" name="goodpatron" value="${goodpatron}" />
+      <input type="hidden" name="command" value="checkout" />
+    </form>
     <h2>
       <span class="icon" aria-hidden="true">📚</span>
       Checkouts

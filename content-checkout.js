@@ -261,7 +261,7 @@ function renderPatron (props) {
     <h2>
       <span class="icon" aria-hidden="true">📚</span>
       Checkouts
-      ${renderCheckoutsCounter(checkouts)}
+      ${renderCounter(checkouts)}
     </h2>
     <div class="book-list">
       ${renderCheckouts(checkouts)}
@@ -275,7 +275,7 @@ function renderPatron (props) {
   renderCovers(barcodes)
 }
 
-function renderCheckoutsCounter (checkouts) {
+function renderCounter (checkouts) {
   const count = checkouts.length
   if (!count) {
     return ''
@@ -382,10 +382,10 @@ function renderCheckins (checkins) {
     return ''
   }
   return `
-    <hr />
     <h2>
       <span class="icon" aria-hidden="true">📚</span>
       Checkins
+      ${renderCounter(checkins)}
     </h2>
     <div class="book-list">
       ${checkins.map(renderCheckin).join('')}

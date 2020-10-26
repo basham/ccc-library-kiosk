@@ -213,6 +213,10 @@ button:active,
   padding: 1rem;
 }
 
+.alert-icon {
+  margin-right: 0.5em;
+}
+
 .breadcrumbs {
   display: flex;
   color: var(--color-dark-gray);

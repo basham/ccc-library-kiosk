@@ -79,8 +79,10 @@ function renderAlert (message) {
   if (!message) {
     return ''
   }
+  const replacer = '<span aria-hidden="true" class="alert-icon">$1</span>$2'
+  const formattedMessage = message.replace(/(.)\s(.+)/, replacer)
   return `
-    <h1 class="alert">${message}</h1>
+    <h1 class="alert">${formattedMessage}</h1>
   `
 }
 

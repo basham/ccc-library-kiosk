@@ -49,8 +49,7 @@ body > br {
 }
 
 header {
-  background-color: var(--color-purple);
-  border-bottom: calc(1rem/16) solid var(--color-black);
+  border-bottom: calc(1rem/16) solid var(--color-light-gray);
   padding: 1rem;
   text-align: center;
 }
@@ -181,10 +180,10 @@ button:active,
 }
 
 .logo span {
-  color: var(--color-white);
+  color: var(--color-brown);
   font-size: 2.5rem;
   font-weight: bold;
-  margin-left: 2rem;
+  margin-left: 1rem;
 }
 
 .row {

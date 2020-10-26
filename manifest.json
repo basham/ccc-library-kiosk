@@ -44,7 +44,7 @@
   ],
   "web_accessible_resources": [
     "blank.html",
-    "ecc-logo-white.png",
+    "ecc-logo.png",
     "icon128.png"
   ],
   "manifest_version": 2

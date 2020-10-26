@@ -61,7 +61,7 @@ function render ({ breadcrumbs, title, content, hasError = false, alertMessage =
   container.innerHTML = `
     <header>
       <a href="${chrome.runtime.getURL('blank.html')}" class="logo">
-        <img src="${chrome.runtime.getURL('ecc-logo-white.png')}" alt="${name}" />
+        <img src="${chrome.runtime.getURL('ecc-logo.png')}" alt="${name}" />
         <span>Library</span>
       </a>
     </header>

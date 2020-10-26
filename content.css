@@ -202,6 +202,7 @@ button:active,
 
 .highlight {
   background-color: var(--color-highlight);
+  border-radius: 0.25rem;
   padding: 0 0.5ch;
 }
 
@@ -215,6 +216,14 @@ button:active,
 
 .alert-icon {
   margin-right: 0.5em;
+}
+
+.badge {
+  background-color: var(--color-highlight);
+  border-radius: 0.5rem;
+  font-weight: normal;
+  margin: 0 0.5rem;
+  padding: 0 0.5rem;
 }
 
 .breadcrumbs {

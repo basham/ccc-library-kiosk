@@ -261,6 +261,7 @@ function renderPatron (props) {
     <h2>
       <span class="icon" aria-hidden="true">📚</span>
       Checkouts
+      ${renderCheckoutsCounter(checkouts)}
     </h2>
     <div class="book-list">
       ${renderCheckouts(checkouts)}
@@ -272,6 +273,14 @@ function renderPatron (props) {
 
   const barcodes = checkouts.map(({ barcode }) => barcode)
   renderCovers(barcodes)
+}
+
+function renderCheckoutsCounter (checkouts) {
+  const count = checkouts.length
+  if (!count) {
+    return ''
+  }
+  return `<span class="badge">${count}</span>`
 }
 
 function renderCheckouts (checkouts) {

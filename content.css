@@ -58,14 +58,14 @@ main {
   font-size: calc(18rem/16);
   line-height: calc(28rem/16);
   margin: 0 auto;
-  max-width: 45rem;
+  max-width: 50rem;
   padding: 4rem;
 }
 
 h1 {
   font-size: 3rem;
   line-height: 3.5rem;
-  margin: 0;
+  margin: 0 0 2rem;
 }
 
 h2 {
@@ -84,17 +84,6 @@ h3 {
   font-size: 1.5rem;
   font-weight: normal;
   line-height: 2rem;
-  margin: 2rem 0 0;
-}
-
-hr {
-  border-color: var(--color-light-gray);
-  border-style: solid;
-  border-width: 0 0 calc(2rem/16);
-  margin: 4rem 0;
-}
-
-form {
   margin: 2rem 0 0;
 }
 
@@ -117,6 +106,7 @@ dl > div {
 
 dt {
   font-weight: bold;
+  white-space: nowrap;
 }
 
 dd {
@@ -249,6 +239,36 @@ button:active,
 .book-cover > img {
   margin-top: 2rem;
   width: 100%;
+}
+
+@media (min-width: 50rem) {
+
+  .patron {
+    display: grid;
+    gap: 4rem;
+    grid-template-areas:
+      "form info"
+      "checkouts checkouts";
+    grid-template-columns: 1fr min-content;
+    margin-top: 4rem;
+  }
+
+  .patron h2 {
+    margin-top: 0;
+  }
+
+  .patron__form {
+    grid-area: form;
+  }
+
+  .patron__info {
+    grid-area: info;
+    max-width: 18rem;
+  }
+
+  .patron__checkouts {
+    grid-area: checkouts;
+  }
 }
 
 .margin-top-none {

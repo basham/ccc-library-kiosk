@@ -174,7 +174,7 @@ function renderScanCard () {
       Need to sign up for a card?
     </h2>
     <p>Fill out either the online <a href="https://docs.google.com/forms/d/e/1FAIpQLSdoM9GqJE4YglUEOQdWIfeLyvxV6oOt8DuQ9fgOHOXT8zcsGw/viewform">Library Card Signup Form</a> or the paper form.</p>
-    <p>Expect the card to be printed and placed in the filing box within a week. If you want to check out items today, ask a <b>library helper</b> for assistance. If no one is available, write down:</p>
+    <p>Expect the card to be printed and placed in the filing box within a week. If you want to check out items today, ask a <b>library helper</b> for assistance. If no one is available, write down the following details, and leave the note at the kiosk desk.</p>
     <ol>
       <li>Your name, email, and phone number</li>
       <li>Current date</li>
@@ -229,41 +229,53 @@ function renderPatron (props) {
       return { barcode, title, callNumber, outDate, dueDate, isOverdue, canRenew, goodpatron }
     })
 
-  const title = name
+  const title = 'Check out'
   const breadcrumbs = [
     ['Scan your library card', 'http://circ.libraryworld.com/cgi-bin/selfservice.pl?command=checkout']
   ]
   const content = `
-    <dl>
-      <div>
-        <dt>Email</dt>
-        <dd>${email}</dd>
+    <div class="patron">
+      <div class="patron__form">
+        <h2>
+          <span class="icon" aria-hidden="true">📗</span>
+          Check out a new item
+        </h2>
+        <form method="GET" action="${url}" autocomplete="off">
+          ${renderBookBarcodeField()}
+          <button type="submit">Check out</button>
+          <input type="hidden" name="goodpatron" value="${goodpatron}" />
+          <input type="hidden" name="command" value="checkout" />
+        </form>
       </div>
-      <div>
-        <dt>Library card number</dt>
-        <dd>${libraryCardNumber}</dd>
+      <div class="patron__checkouts">
+        <h2>
+          <span class="icon" aria-hidden="true">📚</span>
+          Checkouts
+          ${renderCounter(checkouts)}
+        </h2>
+        <div class="book-list">
+          ${renderCheckouts(checkouts)}
+        </div>
       </div>
-    </dl>
-    <p>
-      <a href="${chrome.runtime.getURL('blank.html')}">Log out</a>
-    </p>
-    <h2>
-      <span class="icon" aria-hidden="true">📗</span>
-      Check out
-    </h2>
-    <form method="GET" action="${url}" autocomplete="off">
-      ${renderBookBarcodeField()}
-      <button type="submit">Check out</button>
-      <input type="hidden" name="goodpatron" value="${goodpatron}" />
-      <input type="hidden" name="command" value="checkout" />
-    </form>
-    <h2>
-      <span class="icon" aria-hidden="true">📚</span>
-      Checkouts
-      ${renderCounter(checkouts)}
-    </h2>
-    <div class="book-list">
-      ${renderCheckouts(checkouts)}
+      <div class="patron__info">
+        <h2>
+          <span class="icon" aria-hidden="true">🧑</span>
+          ${name}
+        </h2>
+        <dl>
+          <div>
+            <dt>Email</dt>
+            <dd>${email}</dd>
+          </div>
+          <div>
+            <dt>Library card number</dt>
+            <dd>${libraryCardNumber}</dd>
+          </div>
+        </dl>
+        <p>
+          <a href="${chrome.runtime.getURL('blank.html')}">Log out</a>
+        </p>
+      </div>
     </div>
   `
   render({ title, breadcrumbs, content, hasError, alertMessage })
@@ -397,6 +409,7 @@ function renderCheckin (checkin) {
   return `
     <div>
       <h3>${title}</h3>
+      ${isOverdue ? '<p><span class="highlight">⌛ Overdue</span></p>' : ''}
       <dl>
         <div>
           <dt>Patron</dt>
@@ -410,7 +423,6 @@ function renderCheckin (checkin) {
         <div>
           <dt>In date</dt>
           <dd>${inDate}</dd>
-          ${isOverdue ? '<dd class="highlight">⌛ Overdue!</dd>' : ''}
         </div>
         <div>
           <dt>Barcode</dt>
@@ -426,7 +438,7 @@ function renderBookBarcodeField () {
   return `
     <div>
       <label for="item-number">
-        Book barcode
+        Item barcode
         <small>3000XXXX</small>
         <small>Located in the upper left back corner</small>
       </label>

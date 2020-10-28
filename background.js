@@ -5,11 +5,13 @@ chrome.runtime.onMessage.addListener((message) => {
       chrome.tabs.remove(ids)
     })
     chrome.tabs.create({ index: 0 })
+    chrome.windows.getCurrent(fullscreen)
   }
 })
 
 chrome.tabs.onUpdated.addListener(resetTimeouts)
 chrome.tabs.onActivated.addListener(resetTimeouts)
+chrome.windows.onCreated.addListener(fullscreen)
 
 function resetTimeouts () {
   chrome.tabs.query({}, (tabs) => {
@@ -19,6 +21,7 @@ function resetTimeouts () {
   })
 }
 
-chrome.windows.onCreated.addListener(({ id }) => {
+function fullscreen (window) {
+  const { id } = window
   //chrome.windows.update(id, { state: 'fullscreen' })
-})
+}

@@ -192,6 +192,7 @@ button:active,
 .highlight {
   background-color: var(--color-highlight);
   border-radius: 0.25rem;
+  display: inline-block;
   padding: 0 0.5ch;
 }
 

@@ -224,7 +224,7 @@ function renderPatron (props) {
         const title = displayTitle(titleRaw)
       const outDate = displayDate(outDateRaw)
       const dueDate = displayDate(dueDateRaw)
-      const isOverdue = dueDateRaw > today
+      const isOverdue = dueDateRaw < today
       const canRenew = outDateRaw < today
       return { barcode, title, callNumber, outDate, dueDate, isOverdue, canRenew, goodpatron }
     })
@@ -317,7 +317,7 @@ function renderCheckout (checkout) {
 
 function renderRenewButton (checkout) {
   const { canRenew, barcode, goodpatron } = checkout
-  if (canRenew) {
+  if (!canRenew) {
     return ''
   }
   return `

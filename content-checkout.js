@@ -383,7 +383,7 @@ function renderCheckins (checkins) {
   return `
     <h2>
       <span class="icon" aria-hidden="true">📚</span>
-      Checkins
+      Check-ins
       ${renderCounter(checkins)}
     </h2>
     <div class="book-list">

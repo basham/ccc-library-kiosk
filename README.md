@@ -2,7 +2,7 @@
 
 Chrome extension for the library kiosk at [Evangelical Community Church](http://www.eccbloomington.org/). This extension reskins the [LibraryWorld Self Service](http://circ.libraryworld.com/selfservice.html) app.
 
-## Extention installation
+## Install
 
 1. Download source code as ZIP file.
 2. Unzip source code.

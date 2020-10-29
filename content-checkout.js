@@ -411,11 +411,7 @@ function renderCheckin (checkin) {
       <h3>${title}</h3>
       ${isOverdue ? '<p><span class="highlight">⌛ Overdue</span></p>' : ''}
       <dl>
-        <div>
-          <dt>Patron</dt>
-          <dd>${patronName}</dd>
-          <dd>${libaryCardNumber}</dd>
-        </div>
+
         <div>
           <dt>Out date</dt>
           <dd>${outDate}</dd>
@@ -427,6 +423,11 @@ function renderCheckin (checkin) {
         <div>
           <dt>Barcode</dt>
           <dd>${barcode}</dd>
+        </div>
+        <div>
+        <dt>Patron</dt>
+          <dd>${patronName}</dd>
+          <dd>${libaryCardNumber}</dd>
         </div>
       </dl>
     </div>

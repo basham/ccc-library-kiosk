@@ -1,4 +1,8 @@
-renderBanner()
+chrome.storage.local.get('externalBanner', ({ externalBanner }) => {
+  if (externalBanner) {
+    renderBanner()
+  }
+})
 
 function renderBanner () {
   const banner = document.createElement('div')

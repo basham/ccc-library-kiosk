@@ -1,5 +1,5 @@
-const showTimeout = 1000 * 120 // 120 seconds
-const confirmTimeout = 1000 * 20 // 20 seconds
+let showTimeout = 0
+let confirmTimeout = 0
 let started = false
 let lastActivity = null
 let timeoutNotice = null
@@ -15,7 +15,17 @@ const messageResponses = {
 chrome.runtime.onMessage.addListener((message) => {
   const fn = messageResponses[message]
   if (fn) {
-    fn()
+    chrome.storage.local.get(['timeout', 'showTimeout', 'confirmTimeout'], (options) => {
+      const { timeout } = options
+      if (timeout) {
+        showTimeout = options.showTimeout * 1000
+        confirmTimeout = options.confirmTimeout * 1000
+        fn()
+      }
+      else {
+        stopTimeout()
+      }
+    })
   }
 })
 

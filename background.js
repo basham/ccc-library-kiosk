@@ -23,5 +23,9 @@ function resetTimeouts () {
 
 function fullscreen (window) {
   const { id } = window
-  //chrome.windows.update(id, { state: 'fullscreen' })
+  chrome.storage.local.get('fullscreen', ({ fullscreen }) => {
+    if (fullscreen) {
+      chrome.windows.update(id, { state: 'fullscreen' })
+    }
+  })
 }

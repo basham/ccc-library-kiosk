@@ -411,7 +411,6 @@ function renderCheckin (checkin) {
       <h3>${title}</h3>
       ${isOverdue ? '<p><span class="highlight">⌛ Overdue</span></p>' : ''}
       <dl>
-
         <div>
           <dt>Out date</dt>
           <dd>${outDate}</dd>

@@ -136,7 +136,7 @@ function renderScanCard () {
           Library card number
           <small>2000XXXX</small>
         </label>
-        <input type="text" name="term" id="library-card-number" pattern="2\\d{7}" maxlength="8" />
+        <input type="text" name="term" id="library-card-number" pattern="2\\d{7}" maxlength="8" required />
       </div>
       <button type="submit">Continue</button>
       <input type="hidden" name="goodpatron" value="">
@@ -442,7 +442,7 @@ function renderBookBarcodeField () {
         <small>3000XXXX</small>
         <small>Located in the upper left back corner</small>
       </label>
-      <input type="text" name="term" id="item-number" pattern="3\\d{7}" maxlength="8" />
+      <input type="text" name="term" id="item-number" pattern="3\\d{7}" maxlength="8" required />
     </div>
   `
 }

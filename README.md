@@ -16,6 +16,8 @@ Chrome extension for the library kiosk at [Evangelical Community Church](http://
 10. Enter Library World credentials and update other options as desired.
 11. Delete the source code folder and ZIP file.
 
+For more details, see [instructions on installing custom Chrome extensions](https://developer.chrome.com/extensions/getstarted).
+
 ## Chrome settings
 
 1. Show the browser toolbar in full screen mode. `View > Always Show Toolbar in Full Screen`

@@ -125,5 +125,5 @@ function renderTimoutNotice () {
       <p role="status"></p>
     </div>
   `
-  document.body.appendChild(timeoutNotice)
+  document.body.append(timeoutNotice)
 }

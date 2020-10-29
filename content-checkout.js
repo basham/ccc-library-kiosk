@@ -14,7 +14,7 @@ function init () {
   iconLink.href = chrome.runtime.getURL('icon128.png')
   iconLink.rel = 'icon'
   iconLink.type = 'image/png'
-  document.head.appendChild(iconLink)
+  document.head.append(iconLink)
 
   const params = (new URL(document.location)).searchParams
   const command = params.get('command')
@@ -72,7 +72,7 @@ function render ({ breadcrumbs, title, content, hasError = false, alertMessage =
       ${content}
     </main>
   `
-  document.body.appendChild(container)
+  document.body.append(container)
 }
 
 function renderAlert (message) {
@@ -475,7 +475,7 @@ function loadCovers (barcodes) {
   container.innerHTML = `
     <iframe id="opac" src="https://opac.libraryworld.com/opac/signin.php?libraryname=ECCLIBRARY" hidden></iframe>
   `
-  document.body.appendChild(container)
+  document.body.append(container)
   const opac = document.getElementById('opac')
 
   opac.addEventListener('load', () => {

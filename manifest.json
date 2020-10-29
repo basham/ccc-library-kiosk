@@ -6,32 +6,33 @@
     "128": "icon128.png"
   },
   "background": {
-    "scripts": [ "background.js" ],
+    "scripts": ["background.js"],
     "persistent": false
   },
   "content_scripts": [
     {
-      "matches": [ "http://circ.libraryworld.com/selfservice.html" ],
-      "css": [
-        "content.css"
-      ],
-      "js": [ "content-login.js" ]
+      "matches": ["http://circ.libraryworld.com/selfservice.html"],
+      "css": ["content.css"],
+      "js": ["content-login.js"]
     },
     {
-      "matches": [ "http://circ.libraryworld.com/cgi-bin/selfservice.pl*" ],
-      "css": [
-        "content.css"
-      ],
-      "js": [ "content-checkout.js" ]
+      "matches": ["http://circ.libraryworld.com/cgi-bin/selfservice.pl*"],
+      "css": ["content.css"],
+      "js": ["content-checkout.js"]
     },
     {
-      "matches": [ "https://opac.libraryworld.com/opac/*" ],
+      "matches": ["https://opac.libraryworld.com/opac/*"],
       "all_frames": true,
-      "js": [ "content-opac.js" ]
+      "js": ["content-opac.js"]
     },
     {
-      "matches": [ "<all_urls>" ],
-      "js": [ "content-timeout.js" ]
+      "matches": ["<all_urls>"],
+      "exclude_matches": ["http://circ.libraryworld.com/*"],
+      "js": ["content-banner.js"]
+    },
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content-timeout.js"]
     }
   ],
   "options_page": "options.html",

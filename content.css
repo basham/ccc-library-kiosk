@@ -16,7 +16,7 @@
 }
 
 :focus {
-  outline: calc(3rem/16) solid var(--color-orange);
+  outline: calc(2rem/16) solid var(--color-orange);
   outline-offset: calc(2rem/16);
 }
 

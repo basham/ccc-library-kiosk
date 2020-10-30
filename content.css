@@ -76,7 +76,7 @@ h2 {
 }
 
 h2 > .icon {
-  left: -2ch;
+  left: -3ch;
   position: absolute;
 }
 
@@ -197,7 +197,7 @@ button:active,
   background-color: var(--color-highlight);
   font-size: 1.5rem;
   line-height: 2rem;
-  margin: 0 0 2rem;
+  margin: -1rem 0 2rem;
   padding: 1rem;
 }
 

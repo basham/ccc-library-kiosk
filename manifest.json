@@ -11,8 +11,8 @@
   },
   "content_scripts": [
     {
-      "matches": ["http://circ.libraryworld.com/selfservice.html"],
-      "css": ["content.css"],
+      "matches": ["http://circ.libraryworld.com/selfservice.html*"],
+      "css": ["content-login.css"],
       "js": ["content-login.js"]
     },
     {

@@ -16,8 +16,14 @@ function init () {
   iconLink.type = 'image/png'
   document.head.append(iconLink)
 
+  const command = document.querySelector('.feat_blk_headline:nth-child(2)')
+    .textContent
+    .trim()
+    .split(' - ')[1]
+    .toLowerCase()
+    .replace(' ', '')
+
   const params = (new URL(document.location)).searchParams
-  const command = params.get('command')
   const term = params.get('term')
   const renew = params.get('renew')
   const goodpatron = params.get('goodpatron')

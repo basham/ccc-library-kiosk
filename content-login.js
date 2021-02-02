@@ -9,5 +9,8 @@ chrome.storage.local.get({
   document.querySelector('input[name="lnname"]').value = username
   document.querySelector('input[name="lnpassword"]').value = password
   document.querySelector('input[name="lnlibraryname"]').value = libraryName
-  document.querySelector('input[value="In and Out"]').click()
+  const params = (new URL(document.location)).searchParams
+  const command = params.get('command')
+  const submitButton = command === 'checkout' ? 'Out Only' : 'In Only'
+  document.querySelector(`input[value="${submitButton}"]`).click()
 })

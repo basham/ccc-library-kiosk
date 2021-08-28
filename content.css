@@ -20,46 +20,25 @@
   outline-offset: calc(2rem/16);
 }
 
-:target {
-  animation: highlight 8s ease-out;
-}
-
-@keyframes highlight {
-  0%, 50% {
-    background-color: var(--color-highlight);
-  }
-  100% {
-    background-color: none;
-  }
-}
-
 body {
   color: var(--color-black);
   font-size: 100%;
   font-family: system-ui, sans-serif;
   padding: 0;
-  margin: 0;
-}
-
-/* Hide all provided content */
-body > table,
-body > hr,
-body > br {
-  display: none;
+  margin: 0 auto;
+  max-width: 46rem;
 }
 
 header {
   border-bottom: calc(1rem/16) solid var(--color-light-gray);
-  padding: 1rem;
-  text-align: center;
+  padding: 1rem 0;
 }
 
 main {
   font-size: calc(18rem/16);
   line-height: calc(28rem/16);
   margin: 0 auto;
-  max-width: 50rem;
-  padding: 2rem 4rem;
+  padding: 2rem 0;
 }
 
 h1 {
@@ -80,37 +59,11 @@ h2 > .icon {
   position: absolute;
 }
 
-h3 {
-  font-size: 1.5rem;
-  font-weight: normal;
-  line-height: 2rem;
-  margin: 2rem 0 0;
-}
-
 p,
 ol,
 ul {
   margin: 1rem 0 0;
   padding: 0;
-}
-
-dl {
-  display: flex;
-  flex-wrap: wrap;
-  margin: 0;
-}
-
-dl > div {
-  margin: 1rem 2rem 0 0;
-}
-
-dt {
-  font-weight: bold;
-  white-space: nowrap;
-}
-
-dd {
-  margin: 0;
 }
 
 a {
@@ -121,12 +74,6 @@ label {
   display: block;
   font-weight: bold;
   margin-top: 1rem;
-}
-
-small {
-  color: var(--color-dark-gray);
-  display: block;
-  font-weight: normal;
 }
 
 input[type="number"],
@@ -190,13 +137,6 @@ button:active,
   text-transform: uppercase;
 }
 
-.highlight {
-  background-color: var(--color-highlight);
-  border-radius: 0.25rem;
-  display: inline-block;
-  padding: 0 0.5ch;
-}
-
 .alert {
   background-color: var(--color-highlight);
   font-size: 1.5rem;
@@ -207,70 +147,6 @@ button:active,
 
 .alert-icon {
   margin-right: 0.5em;
-}
-
-.badge {
-  background-color: var(--color-highlight);
-  border-radius: 0.5rem;
-  font-weight: normal;
-  margin: 0 0.5rem;
-  padding: 0 0.5rem;
-}
-
-.breadcrumbs {
-  display: flex;
-  color: var(--color-dark-gray);
-  flex-wrap: wrap;
-  list-style-type: none;
-  margin: 0 0 0.5rem;
-}
-
-.breadcrumbs > li:not(:last-child)::after {
-  content: '/';
-  color: var(--color-light-gray);
-  padding: 0 0.5rem;
-}
-
-.book-list {
-  display: grid;
-  grid-auto-flow: row;
-  grid-gap: 0 1rem;
-  grid-template-columns: 1fr 8rem;
-}
-
-.book-cover > img {
-  margin-top: 2rem;
-  width: 100%;
-}
-
-@media (min-width: 50rem) {
-
-  .patron {
-    display: grid;
-    gap: 4rem;
-    grid-template-areas:
-      "form info"
-      "checkouts checkouts";
-    grid-template-columns: 1fr min-content;
-    margin-top: 4rem;
-  }
-
-  .patron h2 {
-    margin-top: 0;
-  }
-
-  .patron__form {
-    grid-area: form;
-  }
-
-  .patron__info {
-    grid-area: info;
-    max-width: 18rem;
-  }
-
-  .patron__checkouts {
-    grid-area: checkouts;
-  }
 }
 
 .margin-top-none {

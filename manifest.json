@@ -1,7 +1,7 @@
 {
   "name": "CCC Library",
   "version": "1.0",
-  "description": "CCC Library self checkout",
+  "description": "Christ Community Church Library kiosk software",
   "icons": {
     "128": "icon128.png"
   },
@@ -16,23 +16,11 @@
       "js": ["content-login.js"]
     },
     {
-      "matches": ["http://circ.libraryworld.com/cgi-bin/selfservice.pl*"],
-      "css": ["content.css"],
-      "js": ["content-checkout.js"]
-    },
-    {
-      "matches": ["https://opac.libraryworld.com/opac/*"],
-      "all_frames": true,
-      "js": ["content-opac.js"]
-    },
-    {
       "matches": ["<all_urls>"],
-      "exclude_matches": ["http://circ.libraryworld.com/*"],
-      "js": ["content-banner.js"]
-    },
-    {
-      "matches": ["<all_urls>"],
-      "js": ["content-timeout.js"]
+      "js": [
+        "content-banner.js",
+        "content-timeout.js"
+      ]
     }
   ],
   "options_page": "options.html",

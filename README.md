@@ -1,6 +1,6 @@
 # CCC Library Kiosk
 
-Chrome extension for the library kiosk at [Chris Community Church](https://cccbloomington.org). This extension is the frontpage for the admin site, public catalog, and self-checkout software, powered by [Surpass Cloud](https://surpasssoftware.com).
+Chrome extension for the library kiosk at [Christ Community Church](https://cccbloomington.org). This extension is the frontpage for the admin site, public catalog, and self-checkout software, powered by [Surpass Cloud](https://surpasssoftware.com).
 
 ## Install
 

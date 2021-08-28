@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <title>Options - ECC Library</title>
+    <title>Options - CCC Library</title>
     <meta charset="UTF-8">
     <link href="content.css" rel="stylesheet" type="text/css">
     <link href="icon128.png" rel="icon" type="image/png">
@@ -9,31 +9,14 @@
   <body>
     <header>
       <span class="logo">
-        <img src="logo.png" height="64" alt="Chris Community Church" />
+        <img src="logo.png" height="64" alt="Christ Community Church" />
         <span class="logo__text">Library</span>
       </span>
     </header>
     <main>
-      <h1 id="success-alert" class="alert" hidden tabindex="-1">
-        <span aria-hidden="true" class="alert-icon">✅</span>
-        Options saved
-      </h1>
-      <h1>Options</h1>
+      <h1 id="success-alert" class="alert" hidden tabindex="-1">Options saved</h1>
+      <h1>Kiosk options</h1>
       <form id="login" autocomplete="off">
-        <h2>Library World login</h2>
-        <div>
-          <label for="username">Username</label>
-          <input id="username" type="text" />
-        </div>
-        <div>
-          <label for="password">Password</label>
-          <input id="password" type="password" />
-        </div>
-        <div>
-          <label for="libraryName">Library name</label>
-          <input id="libraryName" type="text" />
-        </div>
-        <h2>Kiosk</h2>
         <div>
           <input id="externalBanner" type="checkbox" />
           <label for="externalBanner">Show "Return to…" banner on external webpages</label>
@@ -54,7 +37,7 @@
           <label for="confirmTimeout">Reset kiosk after showing warning (seconds)</label>
           <input id="confirmTimeout" type="number" min="0" />
         </div>
-        <div class="margin-top-lg">
+        <div class="margin-top-sm">
           <button type="submit">Save</button>
         </div>
       </form>

@@ -94,10 +94,10 @@ function reset () {
 
 function renderTimoutNotice () {
   timeoutNotice.setAttribute('tabindex', '0')
-  timeoutNotice.classList.add('ecclib-timeout-notice')
+  timeoutNotice.classList.add('ccclib-timeout-notice')
   timeoutNotice.innerHTML = `
     <style>
-      .ecclib-timeout-notice {
+      .ccclib-timeout-notice {
         background-color: rgba(0, 0, 0, 80%);
         color: #333333;
         font-family: system-ui, sans-serif;
@@ -109,28 +109,28 @@ function renderTimoutNotice () {
         width: 100vw;
         z-index: 1000;
       }
-      .ecclib-timeout-notice:focus {
+      .ccclib-timeout-notice:focus {
         outline: none;
       }
-      .ecclib-timeout-notice__body {
+      .ccclib-timeout-notice__body {
         background-color: #ffffff;
         border-radius: 0.5rem;
         margin: 10vh auto 0;
         max-width: max-content;
         padding: 2rem;
       }
-      .ecclib-timeout-notice h2 {
+      .ccclib-timeout-notice h2 {
         font-size: 1.5rem;
         line-height: 2rem;
         margin: 0 0 0.5rem;
       }
-      .ecclib-timeout-notice p {
+      .ccclib-timeout-notice p {
         font-size: 1rem;
         line-height: 1.5rem;
         margin: 0;
       }
     </style>
-    <div class="ecclib-timeout-notice__body">
+    <div class="ccclib-timeout-notice__body">
       <h2>Press any key to continue</h2>
       <p role="status"></p>
     </div>

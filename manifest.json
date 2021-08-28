@@ -1,7 +1,7 @@
 {
-  "name": "ECC Library",
+  "name": "CCC Library",
   "version": "1.0",
-  "description": "ECC Library self checkout, with Library World",
+  "description": "CCC Library self checkout",
   "icons": {
     "128": "icon128.png"
   },
@@ -45,8 +45,8 @@
   ],
   "web_accessible_resources": [
     "blank.html",
-    "ecc-logo.png",
-    "icon128.png"
+    "icon128.png",
+    "logo.png"
   ],
   "manifest_version": 2
 }

@@ -59,7 +59,7 @@ main {
   line-height: calc(28rem/16);
   margin: 0 auto;
   max-width: 50rem;
-  padding: 4rem;
+  padding: 2rem 4rem;
 }
 
 h1 {
@@ -71,7 +71,7 @@ h1 {
 h2 {
   font-size: 2rem;
   line-height: 2.5rem;
-  margin: 4rem 0 0;
+  margin: 2rem 0 0;
   position: relative;
 }
 
@@ -173,17 +173,21 @@ button:active,
 }
 
 .logo {
-  align-items: center;
-  display: inline-flex;
-  padding: 0.5rem;
+  align-items: stretch;
+  display: inline-block;
+  padding: 0.5rem 0.5rem 1.5rem;
   text-decoration: none;
+  position: relative;
 }
 
-.logo span {
+.logo__text {
   color: var(--color-brown);
-  font-size: 2.5rem;
-  font-weight: bold;
-  margin-left: 1rem;
+  font-size: calc(21rem / 16);
+  font-weight: 300;
+  left: calc(105rem / 16);
+  position: absolute;
+  top: calc(68rem / 16);
+  text-transform: uppercase;
 }
 
 .highlight {

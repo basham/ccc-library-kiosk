@@ -24,7 +24,9 @@ function renderBanner () {
         padding: 0.5em;
       }
       .ccclib-banner img {
+        height: 2em;
         margin-right: 0.5em;
+        width: 2em;
       }
       .ccclib-banner a {
         color: var(--color-white);
@@ -45,7 +47,7 @@ function renderBanner () {
         height: calc(100vh - 258px - var(--ccclib-banner-height));
       }
     </style>
-    <img alt="" height="32" width="32" src="${chrome.runtime.getURL('icon128.png')}">
+    <img alt="" src="${chrome.runtime.getURL('icon128.png')}">
     <span>Return to <a href="${chrome.runtime.getURL('blank.html')}">Christ Community Church Library</a></span>
   `
   document.body.prepend(banner)

@@ -24,9 +24,9 @@ body {
   color: var(--color-black);
   font-size: 100%;
   font-family: system-ui, sans-serif;
-  padding: 0;
+  padding: 0 2rem;
   margin: 0 auto;
-  max-width: 46rem;
+  max-width: 50rem;
 }
 
 header {
@@ -59,11 +59,18 @@ h2 > .icon {
   position: absolute;
 }
 
-p,
+p {
+  margin: 1rem 0 0;
+}
+
 ol,
 ul {
-  margin: 1rem 0 0;
+  margin: 1rem 0 0 1rem;
   padding: 0;
+}
+
+li {
+  margin-top: 0.5rem;
 }
 
 a {

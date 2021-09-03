@@ -24,21 +24,16 @@ body {
   color: var(--color-black);
   font-size: 100%;
   font-family: system-ui, sans-serif;
-  padding: 0 2rem;
+  padding: 2rem;
   margin: 0 auto;
   max-width: 50rem;
-}
-
-header {
-  border-bottom: calc(1rem/16) solid var(--color-light-gray);
-  padding: 1rem 0;
 }
 
 main {
   font-size: calc(18rem/16);
   line-height: calc(28rem/16);
   margin: 0 auto;
-  padding: 2rem 0;
+  padding-top: 3rem;
 }
 
 h1 {
@@ -127,21 +122,23 @@ button:active,
 }
 
 .logo {
-  align-items: stretch;
-  display: inline-block;
-  padding: 0.5rem 0.5rem 1.5rem;
-  text-decoration: none;
-  position: relative;
+  align-items: center;
+  display: inline-flex;
+}
+
+.logo__image {
+  border-right: 1px solid var(--color-light-gray);
+  height: 4rem;
+  margin-right: 1rem;
+  padding-right: 1rem;
 }
 
 .logo__text {
   color: var(--color-brown);
-  font-size: calc(21rem / 16);
+  font-size: calc(30rem / 16);
   font-weight: 300;
-  left: calc(105rem / 16);
-  position: absolute;
-  top: calc(68rem / 16);
-  text-transform: uppercase;
+  position: relative;
+  top: calc(-3rem / 16);
 }
 
 .alert {

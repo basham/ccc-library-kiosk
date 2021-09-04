@@ -5,13 +5,13 @@ chrome.runtime.onMessage.addListener((message) => {
       chrome.tabs.remove(ids)
     })
     chrome.tabs.create({ index: 0 })
-    chrome.windows.getCurrent(fullscreen)
+    chrome.windows.getCurrent(maximize)
   }
 })
 
 chrome.tabs.onUpdated.addListener(resetTimeouts)
 chrome.tabs.onActivated.addListener(resetTimeouts)
-chrome.windows.onCreated.addListener(fullscreen)
+chrome.windows.onCreated.addListener(maximize)
 
 function resetTimeouts () {
   chrome.tabs.query({}, (tabs) => {
@@ -21,11 +21,12 @@ function resetTimeouts () {
   })
 }
 
-function fullscreen (window) {
+function maximize (window) {
   const { id } = window
-  chrome.storage.local.get('fullscreen', ({ fullscreen }) => {
-    if (fullscreen) {
-      chrome.windows.update(id, { state: 'fullscreen' })
+  chrome.windows.update(id, { state: 'maximize' })
+  chrome.storage.local.get('maximize', ({ maximize }) => {
+    if (maximize) {
+      chrome.windows.update(id, { state: 'maximized' })
     }
   })
 }

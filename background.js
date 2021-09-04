@@ -23,7 +23,7 @@ function resetTimeouts () {
 
 function maximize (window) {
   const { id } = window
-  chrome.windows.update(id, { state: 'maximize' })
+  chrome.windows.update(id, { state: 'maximized' })
   chrome.storage.local.get('maximize', ({ maximize }) => {
     if (maximize) {
       chrome.windows.update(id, { state: 'maximized' })
